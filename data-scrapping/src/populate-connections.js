@@ -31,20 +31,25 @@ exports.populateConnections = async (
 
       // process id if not already processed
       if (!artistIdSet.has(currentId)) {
+        const res = await getRelatedArtists(currentId);
+        const data = res.artists;
+
+        // adding artist to computed set
         artistIdSet.add(currentId);
         fs.appendFile(artistIdSetFile, `${currentId},`, (err) => {
           if (err) throw err;
         });
 
-        const res = await getRelatedArtists(currentId);
-        const data = res.artists;
-
         // reviewing each related artist
         data.forEach((artist) => {
           // if popular enough, process artist id
           if (artist.popularity >= popularityThreshold) {
-
-            const artistNameUrlPair = artist.name + '|' + artist.images[0].url
+            const artistNameUrlPair =
+              artist.name +
+              '|' +
+              (artist.images.length > 0
+                ? artist.images[0].url
+                : 'NO IMAGE AVAILABLE');
             processingQueue.enqueue([artistNameUrlPair, artist.id]);
             fs.appendFile(
               connectionsFile,
