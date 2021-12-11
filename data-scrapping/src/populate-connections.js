@@ -43,10 +43,12 @@ exports.populateConnections = async (
         data.forEach((artist) => {
           // if popular enough, process artist id
           if (artist.popularity >= popularityThreshold) {
-            processingQueue.enqueue([artist.name, artist.id]);
+
+            const artistNameUrlPair = artist.name + '|' + artist.images[0].url
+            processingQueue.enqueue([artistNameUrlPair, artist.id]);
             fs.appendFile(
               connectionsFile,
-              `${currentName} -> ${artist.name}\n`,
+              `${currentName} -> ${artistNameUrlPair}\n`,
               (err) => {
                 if (err) throw err;
               }
