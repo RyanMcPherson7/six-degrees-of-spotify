@@ -1,5 +1,5 @@
-import populateConnections from './populate-connections.js';
-import setPopulator from './populate-artist-set.js';
+const { populateConnections } = require('./src/populate-connections')
+const { setPopulator } = require('./src/populate-artist-set')
 
 const SOURCE = [
   ['Justin Bieber', '1uNFoZAHBGtllmzznpCI3s'],

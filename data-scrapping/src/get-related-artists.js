@@ -1,5 +1,5 @@
-import axios from 'axios';
-import dotenv from 'dotenv';
+const axios = require('axios');
+const dotenv = require('dotenv');
 dotenv.config();
 
 // returns bearer token from Spotify
@@ -22,7 +22,7 @@ const getToken = async () => {
 };
 
 // returns related artists list for specified artistId
-const getRelatedArtists = async (artistId) => {
+exports.getRelatedArtists = async (artistId) => {
   const token = await getToken();
   // console.log(token);
 
@@ -36,5 +36,3 @@ const getRelatedArtists = async (artistId) => {
 
   return res.data;
 };
-
-export default getRelatedArtists;

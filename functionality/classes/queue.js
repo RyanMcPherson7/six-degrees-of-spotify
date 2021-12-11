@@ -18,4 +18,8 @@ exports.Queue = class {
   empty = () => {
     return this.store.length === 0 ? true : false;
   };
+
+  size = () => {
+    return this.store.length;
+  };
 };

@@ -1,7 +1,7 @@
-import fs from 'fs';
+const fs = require('fs');
 
 // reading already processed artists
-const setPopulator = (artistIdSetFile) => {
+exports.setPopulator = (artistIdSetFile) => {
   let artistIdSet = new Set();
   fs.readFile(artistIdSetFile, 'utf8', (err, data) => {
     if (err) throw err;
@@ -14,5 +14,3 @@ const setPopulator = (artistIdSetFile) => {
 
   return artistIdSet;
 };
-
-export default setPopulator;

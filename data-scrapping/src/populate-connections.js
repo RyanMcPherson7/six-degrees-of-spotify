@@ -1,9 +1,9 @@
-import getRelatedArtists from './get-related-artists.js';
-import Queue from 'yocto-queue';
-import fs from 'fs';
+const { getRelatedArtists } = require('./get-related-artists');
+const { Queue } = require('../../functionality/classes/queue');
+const fs = require('fs');
 
 // writes specified # artists connections to connections.txt
-const populateConnections = async (
+exports.populateConnections = async (
   source,
   artistIdSet,
   artistIdSetFile,
@@ -21,11 +21,10 @@ const populateConnections = async (
   console.log('# already processed artists', artistIdSet.size);
 
   // processing artists
-  while (processingQueue.size != 0) {
+  while (!processingQueue.empty()) {
     // processing each id in processing queue
-    const qSize = processingQueue.size;
+    const qSize = processingQueue.size();
     for (let i = 0; i < qSize; i++) {
-
       count++;
       let currentName, currentId;
       [currentName, currentId] = processingQueue.dequeue();
@@ -61,5 +60,3 @@ const populateConnections = async (
 
   console.log('processing queue is empty');
 };
-
-export default populateConnections;
