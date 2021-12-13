@@ -58,11 +58,7 @@ const SOURCE = [
   // ['Bon Jovi|https://i.scdn.co/image/ab6761610000e5eb0b8d424042d51bb8ee412ffe', '58lV9VcRSjABbAbfWS6skp'],
   // ['ABBA|https://i.scdn.co/image/ab6761610000e5eb118de0c58b11e1fd54b66640', '0LcJLqbBmaGUft1e9Mm8HV'],
   // ['Gusttavo Lima|https://i.scdn.co/image/ab6761610000e5eb9ecf24928f976475a5847dc0', '7MiDcPa6UiV3In7lIM71IN'],
-  ['Alok|https://i.scdn.co/image/ab6761610000e5ebac131b08319b80876e93007c', '0NGAZxHanS9e0iNHpR8f2W'],
-  // ['', ''],
-  // ['', ''],
-  // ['', ''],
-  // ['', ''],
+  // ['Alok|https://i.scdn.co/image/ab6761610000e5ebac131b08319b80876e93007c', '0NGAZxHanS9e0iNHpR8f2W'],
   // ['', ''],
 ];
 
