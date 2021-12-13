@@ -4,8 +4,8 @@ const { Graph } = require('./functionality/classes/graph');
 
 let graph = new Graph();
 let artistImageMap = new Map();
-const fromArtist = 'Kanye West';
-const toArtist = 'The Beatles';
+const fromArtist = 'Bob Marley & The Wailers';
+const toArtist = 'Justin Bieber';
 
 let t1 = Date.now();
 populateGraph(graph, artistImageMap, './data-scrapping/data/connections55.txt');
