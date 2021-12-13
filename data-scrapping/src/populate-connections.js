@@ -1,4 +1,4 @@
-const { getRelatedArtists } = require('./get-related-artists');
+const { getRelatedArtists } = require('./spotify-api');
 const { Queue } = require('../../functionality/classes/queue');
 const fs = require('fs');
 
@@ -49,7 +49,7 @@ exports.populateConnections = async (
               '|' +
               (artist.images.length > 0
                 ? artist.images[0].url
-                : 'NO IMAGE AVAILABLE');
+                : 'IMAGE NOT AVAILABLE');
             processingQueue.enqueue([artistNameUrlPair, artist.id]);
             fs.appendFile(
               connectionsFile,

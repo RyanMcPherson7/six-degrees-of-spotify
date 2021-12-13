@@ -8,7 +8,7 @@ const fromArtist = 'Kanye West';
 const toArtist = 'The Beatles';
 
 let t1 = Date.now();
-populateGraph(graph, artistImageMap, './data-scrapping/data/connections40.txt');
+populateGraph(graph, artistImageMap, './data-scrapping/data/connections55.txt');
 let t2 = Date.now();
 console.log(`uploaded data in ${(t2 - t1) / 1000} seconds`);
 
