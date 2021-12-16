@@ -13,6 +13,12 @@ exports.findPath = (start, end) => {
     './data-scrapping/data/connections55.txt'
   );
 
+  // checking input validity
+  if (!graph.adjList.has(start) || !graph.adjList.has(end))
+    return [
+      'Requested artist is not contained within the database. Please check for correct spelling, capitalization, and Spotify popularity score (must be over 55)',
+    ];
+
   // finding path
   const paths = BFS(graph, start, end);
 
