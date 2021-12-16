@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 // returns path with artist names and images
-app.get('/api', async (req, res) => {
+app.get('/api/path', async (req, res) => {
   try {
     const start = req.body.start;
     const end = req.body.end;
