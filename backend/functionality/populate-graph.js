@@ -8,11 +8,20 @@ exports.populateGraph = (graph, map, connectionsFile) => {
   // connectionsFile must not contain any empty spaces at the end
   data.forEach((connection) => {
     const [from, to] = connection.split(' -> ');
-    const [fromName, fromUrl] = from.split('|');
-    const [toName, toUrl] = to.split('|');
+    let [fromName, fromImageUrl] = from.split('|');
+    let [toName, toImageUrl] = to.split('|');
+
+    // removing '\r' character if present
+    if (fromImageUrl[fromImageUrl.length - 1] === '\r') {
+      fromImageUrl = fromImageUrl.substring(0, fromImageUrl.length - 1);
+    }
+
+    if (toImageUrl[toImageUrl.length - 1] === '\r') {
+      toImageUrl = toImageUrl.substring(0, toImageUrl.length - 1);
+    }
 
     graph.insert(fromName, toName);
-    map.set(fromName, fromUrl);
-    map.set(toName, toUrl);
+    map.set(fromName, fromImageUrl);
+    map.set(toName, toImageUrl);
   });
 };
