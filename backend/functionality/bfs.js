@@ -10,6 +10,9 @@ exports.BFS = (graph, start, end) => {
   visited.add(start);
   parent.set(start, '-1');
 
+  if (start === end) 
+    return parent;
+
   while (!q.empty() && !found) {
     const front = q.dequeue();
 
