@@ -15,9 +15,10 @@ exports.findPath = (start, end) => {
 
   // checking input validity
   if (!graph.adjList.has(start) || !graph.adjList.has(end))
-    return [
-      'Requested artist is not contained within the database. Please check for correct spelling, capitalization, and Spotify popularity score (must be over 55)',
-    ];
+    return {
+      valid: false,
+      message: 'Requested artist is not contained within the database. Please check for correct spelling, capitalization, and Spotify popularity score (must be over 55)',
+    }
 
   // finding path
   const paths = BFS(graph, start, end);
@@ -43,5 +44,8 @@ exports.findPath = (start, end) => {
     stk.pop();
   }
 
-  return artistPath;
+  return {
+    valid: true,
+    path: artistPath,
+  }
 };

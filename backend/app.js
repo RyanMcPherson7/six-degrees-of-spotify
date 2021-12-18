@@ -19,7 +19,7 @@ app.post('/api/path/', async (req, res) => {
   try {
     const start = req.body.start;
     const end = req.body.end;
-    res.json({ path: findPath(start, end) });
+    res.json(findPath(start, end));
   } catch (err) {
     console.error(err.message);
   }
@@ -31,7 +31,7 @@ app.get('/api/path/:start/:end', async (req, res) => {
   try {
     const start = req.params.start;
     const end = req.params.end;
-    res.json({ path: findPath(start, end) });
+    res.json(findPath(start, end));
   } catch (err) {
     console.error(err.message);
   }

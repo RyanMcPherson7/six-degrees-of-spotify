@@ -1,17 +1,12 @@
-import './App.css';
-import getPath from './api/get-path';
+import Navbar from './components/Navbar'
+import Interface from './components/Interface';
 
 function App() {
-  async function test() {
-    const res = getPath('Kanye West', 'Coldplay');
-    console.log(res);
-  }
-
-  test();
-
+  
   return (
     <>
-      <div>Pls work</div>
+      <Navbar />
+      <Interface />
     </>
   );
 }
