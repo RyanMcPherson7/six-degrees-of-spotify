@@ -3,7 +3,7 @@ import getPath from '../api/get-path';
 import ArtistPanel from './ArtistPanel';
 
 const Interface = () => {
-  const [artistPath, setArtistPath] = useState({ valid: false });
+  const [artistPath, setArtistPath] = useState({});
 
   const onSubmitForm = async (startArtist, endArtist) => {
     const res = await getPath(startArtist, endArtist);
@@ -26,7 +26,7 @@ const Interface = () => {
           Let's Do This
         </button>
       </form>
-      <ArtistPanel artistData={{ ...artistPath }} />
+      <ArtistPanel artistData={artistPath} />
     </>
   );
 };

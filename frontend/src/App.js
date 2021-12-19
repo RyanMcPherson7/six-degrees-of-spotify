@@ -1,5 +1,6 @@
 import Navbar from './components/Navbar'
 import Interface from './components/Interface';
+import Footer from './components/Footer'
 
 function App() {
   
@@ -7,6 +8,7 @@ function App() {
     <>
       <Navbar />
       <Interface />
+      <Footer />
     </>
   );
 }
