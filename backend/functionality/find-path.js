@@ -17,7 +17,7 @@ exports.findPath = (start, end) => {
   if (!graph.adjList.has(start) || !graph.adjList.has(end))
     return {
       valid: false,
-      message: 'Requested artist is not contained within the database. Please check for correct spelling, capitalization, and Spotify popularity score (must be over 55)',
+      errorMessage: 'Requested artist is not contained within the database. Please check for correct spelling, capitalization, and Spotify popularity score (must be over 55)',
     }
 
   // finding path

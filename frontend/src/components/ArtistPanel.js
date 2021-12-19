@@ -1,10 +1,17 @@
-import PropTypes from 'prop-types';
-
-export const ArtistPanel = ({ path }) => {
+export const ArtistPanel = ({ artistData }) => {
   return (
-    <>{path instanceof String ? <div>{path}</div> : <div>valid path</div>}</>
+    <>
+      {artistData.valid ? (
+        artistData.path.forEach((artist) => {
+          <>
+            <h4>{artist.artist}</h4>;
+          </>;
+        })
+      ) : (
+        <h4>{artistData.errorMessage}</h4>
+      )}
+    </>
   );
 };
-
 
 export default ArtistPanel;
