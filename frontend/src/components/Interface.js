@@ -2,15 +2,10 @@ import { useState } from 'react';
 import getPath from '../api/get-path';
 import ArtistPanel from './ArtistPanel';
 
-// https://stackoverflow.com/questions/58682839/react-hooks-state-always-one-step-behind
-// one step behind issue
-
 const Interface = () => {
-  const [startArtist, setStartArtist] = useState('Kanye West');
-  const [endArtist, setEndArtist] = useState('Taylor Swift');
-  const [artistPath, setArtistPath] = useState([]);
+  const [artistPath, setArtistPath] = useState({ valid: false });
 
-  const onSubmitForm = async () => {
+  const onSubmitForm = async (startArtist, endArtist) => {
     const res = await getPath(startArtist, endArtist);
     setArtistPath(res);
   };
@@ -18,28 +13,20 @@ const Interface = () => {
   return (
     <>
       <form>
-        <input
-          type='text'
-          placeholder='Start Artist'
-          value={startArtist}
-          onChange={(e) => setStartArtist(e.target.value)}
-        />
-        <input
-          type='text'
-          placeholder='End Artist'
-          value={endArtist}
-          onChange={(e) => setEndArtist(e.target.value)}
-        />
+        <input id='start-artist-input' type='text' placeholder='Start Artist' />
+        <input id='end-artist-input' type='text' placeholder='End Artist' />
         <button
           onClick={(e) => {
             e.preventDefault();
-            onSubmitForm();
+            const start = document.querySelector('#start-artist-input').value;
+            const end = document.querySelector('#end-artist-input').value;
+            onSubmitForm(start, end);
           }}
         >
           Let's Do This
         </button>
       </form>
-      <ArtistPanel artistData={artistPath} />
+      <ArtistPanel artistData={{ ...artistPath }} />
     </>
   );
 };

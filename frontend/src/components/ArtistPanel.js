@@ -2,11 +2,11 @@ export const ArtistPanel = ({ artistData }) => {
   return (
     <>
       {artistData.valid ? (
-        artistData.path.forEach((artist) => {
-          <>
-            <h4>{artist.artist}</h4>;
-          </>;
-        })
+        <ul>
+        {artistData.path.map((artist) => {
+          return <li key={artist.artist}>{artist.artist}</li>;
+        })}
+        </ul>
       ) : (
         <h4>{artistData.errorMessage}</h4>
       )}
