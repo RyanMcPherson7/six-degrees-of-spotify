@@ -6,10 +6,14 @@ const ArtistProfile = ({ artistName, artistImage }) => {
         : artistImage;
   }
   return (
-    <>
+    <a
+      href={`https://open.spotify.com/search/${artistName}`}
+      target='_blank'
+      rel='noopener noreferrer'
+    >
       <img src={artistImage} alt={artistName} />
       <h4>{artistName}</h4>
-    </>
+    </a>
   );
 };
 

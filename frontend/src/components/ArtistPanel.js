@@ -17,7 +17,9 @@ export const ArtistPanel = ({ artistData }) => {
           })}
         </ul>
       ) : (
-        <h4 id='error-message'>{artistData.errorMessage}</h4>
+        <div id='error-message-container'>
+          <h4 id='error-message'>{artistData.errorMessage}</h4>
+        </div>
       )}
     </>
   );
