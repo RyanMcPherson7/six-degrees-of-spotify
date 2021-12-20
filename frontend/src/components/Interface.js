@@ -12,7 +12,7 @@ const Interface = () => {
 
   return (
     <>
-      <form>
+      <form autoComplete='off'>
         <input id='start-artist-input' type='text' placeholder='Start Artist' />
         <input id='end-artist-input' type='text' placeholder='End Artist' />
         <button
@@ -23,7 +23,7 @@ const Interface = () => {
             onSubmitForm(start, end);
           }}
         >
-          Let's Do This
+          Let's Go!
         </button>
       </form>
       <ArtistPanel artistData={artistPath} />

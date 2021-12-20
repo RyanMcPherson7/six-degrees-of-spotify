@@ -22,19 +22,118 @@ a {
   text-decoration: none;
 }
 
+li {
+  list-style: none;
+}
+
 /* ================================ */
 /*           NAVIGATION             */
 /* ================================ */
-#navbar-container {
+nav {
   background-color: var(--color-green);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   justify-items: center;
   align-items: center;
+  position: fixed;
+  width: 100%;
 }
 
 nav a {
   padding: 0.75rem;
   color: var(--color-black);
+  font-size: 1.3rem;
+}
+
+/* ================================ */
+/*            USER INPUT            */
+/* ================================ */
+form {
+  padding-top: 4rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  padding: 4rem 3rem 0 3rem;
+}
+
+input[type='text'] {
+  font-family: 'Public Sans', sans-serif;
+  border: none;
+  background-color: transparent;
+  padding: 0.3rem;
+  font-size: 1.2rem;
+  text-align: center;
+  color: var(--color-white);
+}
+
+input[type='text']:focus {
+  outline: none;
+}
+
+button {
+  border: none;
+  background-color: var(--color-green);
+  padding: 0.4rem;
+  margin-top: 0.7rem;
+  width: 9rem;
+  font-size: 1.2rem;
+  font-family: 'Public Sans', sans-serif;
+  border-radius: 2rem;
+}
+
+/* ================================ */
+/*           ARTIST PANEL           */
+/* ================================ */
+#artist-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  text-align: center;
+  margin: 1rem 1.5rem 3.5rem;
+}
+
+.artist-profile {
+  margin: 0.75rem;
+}
+
+.artist-profile img {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 10rem;
+  border: 0.4rem solid var(--color-green);
+}
+
+.artist-profile h4 {
+  font-size: 1.1rem;
+  margin-top: 0.4rem;
+}
+
+#error-message {
+  text-align: center;
+  margin: 1.5rem;
+  line-height: 1.5rem;
+}
+
+/* ================================ */
+/*             FOOTER               */
+/* ================================ */
+footer {
+  background-color: var(--color-green);
+  text-align: center;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+}
+
+footer p {
+  padding: 0.75rem 0;
+  color: var(--color-black);
+  font-size: 1.3rem;
+}
+
+footer p a {
+  color: var(--color-black);
+  text-decoration: underline;
 }

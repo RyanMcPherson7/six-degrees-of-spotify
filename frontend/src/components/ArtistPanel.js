@@ -4,10 +4,10 @@ export const ArtistPanel = ({ artistData }) => {
   return (
     <>
       {artistData.valid ? (
-        <ul>
+        <ul id='artist-panel'>
           {artistData.path.map((person) => {
             return (
-              <li key={person.artist}>
+              <li className='artist-profile' key={person.artist}>
                 <ArtistProfile
                   artistName={person.artist}
                   artistImage={person.image}
@@ -17,7 +17,7 @@ export const ArtistPanel = ({ artistData }) => {
           })}
         </ul>
       ) : (
-        <h4>{artistData.errorMessage}</h4>
+        <h4 id='error-message'>{artistData.errorMessage}</h4>
       )}
     </>
   );

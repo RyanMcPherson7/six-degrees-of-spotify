@@ -7,7 +7,7 @@ const ArtistProfile = ({ artistName, artistImage }) => {
   }
   return (
     <>
-      <img src={artistImage} alt={artistName} width={100} height={100} />
+      <img src={artistImage} alt={artistName} />
       <h4>{artistName}</h4>
     </>
   );
