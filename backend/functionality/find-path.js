@@ -6,10 +6,10 @@ const { populateGraph } = require('./populate-graph');
 exports.findPath = (start, end) => {
   // building graph
   let graph = new Graph();
-  let artistImageMap = new Map();
+  let artistDataMap = new Map();
   populateGraph(
     graph,
-    artistImageMap,
+    artistDataMap,
     './data-scrapping/data/connections55.txt'
   );
 
@@ -17,8 +17,9 @@ exports.findPath = (start, end) => {
   if (!graph.adjList.has(start) || !graph.adjList.has(end))
     return {
       valid: false,
-      errorMessage: 'The requested artist(s) are not contained within the database. Please check for correct spelling, capitalization, and Spotify popularity score (must be over 55).',
-    }
+      errorMessage:
+        'The requested artist(s) are not contained within the database. Please check your spelling and ensure the artist(s) have a Spotify popularity score of 55 or greater.',
+    };
 
   // finding path
   const paths = BFS(graph, start, end);
@@ -36,10 +37,7 @@ exports.findPath = (start, end) => {
   let artistPath = [];
 
   while (!stk.empty()) {
-    artistPath.push({
-      artist: stk.top(),
-      image: artistImageMap.get(stk.top()),
-    });
+    artistPath.push(artistDataMap.get(stk.top()));
 
     stk.pop();
   }
@@ -47,5 +45,5 @@ exports.findPath = (start, end) => {
   return {
     valid: true,
     path: artistPath,
-  }
+  };
 };

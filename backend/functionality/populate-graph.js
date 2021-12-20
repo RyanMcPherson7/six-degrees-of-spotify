@@ -11,11 +11,12 @@ exports.populateGraph = (graph, map, connectionsFile) => {
     let [fromName, fromImageUrl] = from.split('|');
     let [toName, toImageUrl] = to.split('|');
 
-    // removing '\r' character if present
+    // removing '\r' character
     toImageUrl = toImageUrl.substring(0, toImageUrl.length - 1);
 
-    graph.insert(fromName, toName);
-    map.set(fromName, fromImageUrl);
-    map.set(toName, toImageUrl);
+    // artist names are stored in lowercase in graph
+    graph.insert(fromName.toLowerCase(), toName.toLowerCase());
+    map.set(fromName.toLowerCase(), { artist: fromName, image: fromImageUrl });
+    map.set(toName.toLowerCase(), { artist: toName, image: toImageUrl });
   });
 };
