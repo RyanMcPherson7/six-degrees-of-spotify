@@ -29,21 +29,29 @@ li {
 /* ================================ */
 /*           NAVIGATION             */
 /* ================================ */
-nav {
+#navbar-container {
+  width: 100%;
   background-color: var(--color-green);
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+nav {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   justify-items: center;
   align-items: center;
-  position: fixed;
-  width: 100%;
+  margin: 0 auto;
+  max-width: 1000px;
 }
 
 nav a {
   padding: 0.75rem;
   color: var(--color-black);
-  font-size: 1.3rem;
+  font-size: 1rem;
+  transition: color 0.5s ease-in-out;
 }
 
 /* ================================ */
@@ -82,6 +90,24 @@ button {
   font-size: 1.2rem;
   font-family: 'Public Sans', sans-serif;
   border-radius: 2rem;
+
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-white);
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease-in-out;
 }
 
 /* ================================ */
@@ -91,11 +117,13 @@ button {
   display: grid;
   grid-template-columns: 1fr 1fr;
   text-align: center;
-  margin: 1rem 1.5rem 3.5rem;
+  margin: 1rem auto;
+  max-width: 1000px;
 }
 
 .artist-profile {
-  margin: 0.75rem;
+  padding: 0.75rem;
+  transition: transform 0.5s ease-in-out;
 }
 
 .artist-profile img {
@@ -120,7 +148,7 @@ button {
 /*             FOOTER               */
 /* ================================ */
 footer {
-  background-color: var(--color-green);
+  background-color: var(--color-gray);
   text-align: center;
   width: 100%;
   position: fixed;
@@ -129,11 +157,51 @@ footer {
 
 footer p {
   padding: 0.75rem 0;
-  color: var(--color-black);
-  font-size: 1.3rem;
+  color: var(--color-white);
+  font-size: 1rem;
 }
 
 footer p a {
-  color: var(--color-black);
+  color: var(--color-white);
   text-decoration: underline;
+  transition: 0.5s color ease-in-out;
+}
+
+/* ================================ */
+/*           MEDIA QUERIES          */
+/* ================================ */
+@media (min-width: 600px) {
+  button:hover {
+    cursor: pointer;
+  }
+
+  button:hover::before {
+    transform: scaleX(1);
+  }
+
+  .artist-profile:hover {
+    transform: scale(1.05);
+  }
+
+  #artist-panel {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  footer p a:hover {
+    color: var(--color-green);
+  }
+
+  nav a:hover {
+    color: var(--color-white);
+  }
+}
+
+@media (min-width: 800px) {
+  #artist-panel {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  #error-message {
+    font-size: 1.2rem;
+  }
 }

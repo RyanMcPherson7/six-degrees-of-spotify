@@ -5,8 +5,10 @@ import ArtistPanel from './ArtistPanel';
 const Interface = () => {
   const [artistPath, setArtistPath] = useState({});
 
-  const onSubmitForm = async (startArtist, endArtist) => {
-    const res = await getPath(startArtist, endArtist);
+  const onSubmitForm = async () => {
+    const start = document.querySelector('#start-artist-input').value;
+    const end = document.querySelector('#end-artist-input').value;
+    const res = await getPath(start, end);
     setArtistPath(res);
   };
 
@@ -18,9 +20,7 @@ const Interface = () => {
         <button
           onClick={(e) => {
             e.preventDefault();
-            const start = document.querySelector('#start-artist-input').value;
-            const end = document.querySelector('#end-artist-input').value;
-            onSubmitForm(start, end);
+            onSubmitForm();
           }}
         >
           Let's Go!

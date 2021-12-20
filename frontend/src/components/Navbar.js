@@ -1,9 +1,13 @@
 const Navbar = () => {
   return (
-    <nav id='navbar-container'>
-      <a href='index.html'>6 Degrees of Spotify</a>
-      <a href='https://google.com'>About</a>
-    </nav>
+    <div id='navbar-container'>
+      <nav>
+        <a href='index.html'>6 Degrees of Spotify</a>
+        <a href='https://google.com' target='_blank' rel='noopener noreferrer'>
+          About
+        </a>
+      </nav>
+    </div>
   );
 };
 
