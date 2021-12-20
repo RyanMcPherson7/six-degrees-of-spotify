@@ -1,14 +1,12 @@
-import Navbar from './components/Navbar'
 import Interface from './components/Interface';
-import Footer from './components/Footer'
+import Header from './components/Header'
 
 function App() {
   
   return (
     <>
-      <Navbar />
+      <Header />
       <Interface />
-      {/* <Footer /> */}
     </>
   );
 }
