@@ -1,4 +1,4 @@
-const ArtistProfile = ({ artistName, artistImage }) => {
+const ArtistProfile = ({ artistName, artistId, artistImage }) => {
   {
     artistImage =
       artistImage === 'IMAGE NOT AVAILABLE'
@@ -7,7 +7,7 @@ const ArtistProfile = ({ artistName, artistImage }) => {
   }
   return (
     <a
-      href={`https://open.spotify.com/search/${artistName}`}
+      href={`https://open.spotify.com/artist/${artistId}`}
       target='_blank'
       rel='noopener noreferrer'
     >

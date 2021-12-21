@@ -10,6 +10,7 @@ export const ArtistPanel = ({ artistData }) => {
               <li className='artist-profile' key={person.artist}>
                 <ArtistProfile
                   artistName={person.artist}
+                  artistId={person.id}
                   artistImage={person.image}
                 />
               </li>

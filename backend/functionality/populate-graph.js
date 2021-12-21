@@ -8,15 +8,25 @@ exports.populateGraph = (graph, map, connectionsFile) => {
   // connectionsFile must NOT contain any empty spaces at the end
   data.forEach((connection) => {
     const [from, to] = connection.split(' -> ');
-    let [fromName, fromImageUrl] = from.split('|');
-    let [toName, toImageUrl] = to.split('|');
+    let [fromName, fromId, fromImageUrl] = from.split('|');
+    let [toName, toId, toImageUrl] = to.split('|');
 
     // removing '\r' character
-    toImageUrl = toImageUrl.substring(0, toImageUrl.length - 1);
+    if (toImageUrl[toImageUrl.length - 1 === '\r']) {
+      toImageUrl = toImageUrl.substring(0, toImageUrl.length - 1);
+    }
 
     // artist names are stored in lowercase in graph
     graph.insert(fromName.toLowerCase(), toName.toLowerCase());
-    map.set(fromName.toLowerCase(), { artist: fromName, image: fromImageUrl });
-    map.set(toName.toLowerCase(), { artist: toName, image: toImageUrl });
+    map.set(fromName.toLowerCase(), {
+      artist: fromName,
+      id: fromId,
+      image: fromImageUrl,
+    });
+    map.set(toName.toLowerCase(), {
+      artist: toName,
+      id: toId,
+      image: toImageUrl,
+    });
   });
 };

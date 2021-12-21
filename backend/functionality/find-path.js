@@ -10,7 +10,7 @@ exports.findPath = (start, end) => {
   populateGraph(
     graph,
     artistDataMap,
-    './data-scrapping/data/connections55.txt'
+    './data-scrapping/data/connections-55.txt'
   );
 
   // checking input validity

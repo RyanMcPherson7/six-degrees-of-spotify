@@ -26,8 +26,8 @@ exports.populateConnections = async (
     const qSize = processingQueue.size();
     for (let i = 0; i < qSize; i++) {
       count++;
-      let currentName, currentId;
-      [currentName, currentId] = processingQueue.dequeue();
+      let fromArtist, currentId;
+      [fromArtist, currentId] = processingQueue.dequeue();
 
       // process id if not already processed
       if (!artistIdSet.has(currentId)) {
@@ -44,16 +44,18 @@ exports.populateConnections = async (
         data.forEach((artist) => {
           // if popular enough, process artist id
           if (artist.popularity >= popularityThreshold) {
-            const artistNameUrlPair =
+            const toArtist =
               artist.name +
+              '|' +
+              artist.id +
               '|' +
               (artist.images.length > 0
                 ? artist.images[0].url
                 : 'IMAGE NOT AVAILABLE');
-            processingQueue.enqueue([artistNameUrlPair, artist.id]);
+            processingQueue.enqueue([toArtist, artist.id]);
             fs.appendFile(
               connectionsFile,
-              `${currentName} -> ${artistNameUrlPair}\n`,
+              `${fromArtist} -> ${toArtist}\n`,
               (err) => {
                 if (err) throw err;
               }
