@@ -1,12 +1,6 @@
 import ArtistProfile from './ArtistProfile';
 
 export const ArtistPanel = ({ artistData }) => {
-  // let invalidArtists = '';
-  // if (!artistData.valid) invalidArtists = artistData.invalid_artists[0];
-
-  // if (artistData.invalid_artists.length === 2)
-  //   invalidArtists += ' and ' + artistData.invalid_artists[1];
-
   return (
     <>
       {artistData.valid ? (
