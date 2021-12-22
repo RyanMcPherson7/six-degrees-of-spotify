@@ -59,6 +59,9 @@ const SOURCE = [
   // ['ABBA|0LcJLqbBmaGUft1e9Mm8HV|https://i.scdn.co/image/ab6761610000e5eb118de0c58b11e1fd54b66640', '0LcJLqbBmaGUft1e9Mm8HV'],
   // ['Gusttavo Lima|7MiDcPa6UiV3In7lIM71IN|https://i.scdn.co/image/ab6761610000e5eb9ecf24928f976475a5847dc0', '7MiDcPa6UiV3In7lIM71IN'],
   // ['Alok|0NGAZxHanS9e0iNHpR8f2W|https://i.scdn.co/image/ab6761610000e5ebac131b08319b80876e93007c', '0NGAZxHanS9e0iNHpR8f2W'],
+  // ['John Newman|34v5MVKeQnIo0CWYMbbrPf|https://i.scdn.co/image/ab6761610000e5eb4b4bb15caafc1e26993734df', '34v5MVKeQnIo0CWYMbbrPf'],
+  // ['Pink Floyd|0k17h0D3J5VfsdmQ1iZtE9|https://i.scdn.co/image/e69f71e2be4b67b82af90fb8e9d805715e0684fa', '0k17h0D3J5VfsdmQ1iZtE9'],
+  // ['Weezer|3jOstUTkEu2JkjvRdBA5Gu|https://i.scdn.co/image/ab6761610000e5ebef2e09aeedd0d8f842d1a690', '3jOstUTkEu2JkjvRdBA5Gu'],
   // ['', ''],
 ];
 

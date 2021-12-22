@@ -22,6 +22,7 @@ const Interface = () => {
             width: '1.5rem',
             height: '1.5rem',
             color: 'var(--color-green)',
+            margin: '0.2rem 0',
           }}
         />
         <input id='end-artist-input' type='text' placeholder='End Artist' />
