@@ -14,11 +14,16 @@ exports.findPath = (start, end) => {
   );
 
   // checking input validity
-  if (!graph.adjList.has(start) || !graph.adjList.has(end))
+  let invalidArtists = [];
+
+  if (!graph.adjList.has(start)) invalidArtists.push(start);
+
+  if (!graph.adjList.has(end)) invalidArtists.push(end);
+
+  if (invalidArtists.length !== 0)
     return {
       valid: false,
-      errorMessage:
-        'The requested artist(s) are not contained within the database. Please check your spelling and ensure the artist(s) have a Spotify popularity score of 55 or greater.',
+      invalid_artists: invalidArtists,
     };
 
   // finding path

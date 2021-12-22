@@ -4,7 +4,7 @@ import getPath from '../api/get-path';
 import ArtistPanel from './ArtistPanel';
 
 const Interface = () => {
-  const [artistPath, setArtistPath] = useState({});
+  const [artistPath, setArtistPath] = useState({valid: true, path: []});
 
   const onSubmitForm = async () => {
     const start = document.querySelector('#start-artist-input').value;
