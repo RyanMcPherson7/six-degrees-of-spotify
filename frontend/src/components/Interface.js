@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { FaArrowCircleDown } from 'react-icons/fa';
+import { FaRandom } from 'react-icons/fa';
+import { FaPaperPlane } from 'react-icons/fa';
 import getPath from '../api/get-path';
+import getRandomArtist from '../api/get-random-artists';
 import ArtistPanel from './ArtistPanel';
 
 const Interface = () => {
@@ -11,6 +14,13 @@ const Interface = () => {
     const end = document.querySelector('#end-artist-input').value;
     const res = await getPath(start, end);
     setArtistPath(res);
+  };
+
+  const onSubmitRandom = async () => {
+    const randomArtists = await getRandomArtist();
+    document.querySelector('#start-artist-input').value = randomArtists.start;
+    document.querySelector('#end-artist-input').value = randomArtists.end;
+    onSubmitForm();
   };
 
   return (
@@ -32,7 +42,17 @@ const Interface = () => {
             onSubmitForm();
           }}
         >
+          <FaPaperPlane style={{ marginRight: '0.2rem' }} />
           Let's Go!
+        </button>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            onSubmitRandom();
+          }}
+        >
+          <FaRandom style={{ marginRight: '0.2rem' }} />
+          Random
         </button>
       </form>
       <ArtistPanel artistData={artistPath} />

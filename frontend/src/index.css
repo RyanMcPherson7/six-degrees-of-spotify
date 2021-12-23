@@ -109,9 +109,12 @@ button {
   padding: 0.4rem;
   margin-top: 0.7rem;
   width: 9rem;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-family: 'Public Sans', sans-serif;
   border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   position: relative;
   z-index: 1;
