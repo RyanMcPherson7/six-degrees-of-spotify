@@ -3,14 +3,14 @@ const { Stack } = require('./classes/stack');
 const { Graph } = require('./classes/graph');
 const { populateGraph } = require('./populate-graph');
 
-exports.findPath = (start, end) => {
+exports.findPath = (start, end, connectionsFile) => {
   // building graph
   let graph = new Graph();
   let artistDataMap = new Map();
   populateGraph(
     graph,
     artistDataMap,
-    './data-scrapping/data/connections-55.txt'
+    connectionsFile
   );
 
   // checking input validity
