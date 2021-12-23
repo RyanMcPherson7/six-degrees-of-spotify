@@ -69,7 +69,7 @@ header h4 {
 header h4 a {
   color: var(--color-white);
   text-decoration: underline;
-  transition: color 0.5s ease-in-out;
+  transition: color 0.3s ease-in-out;
 }
 
 #description-container {

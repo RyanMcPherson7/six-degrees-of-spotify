@@ -20,13 +20,22 @@ export const ArtistPanel = ({ artistData }) => {
       ) : (
         <div id='error-message-container'>
           <h4 id='error-message'>
-            Sorry,
-            <span className='special'>
-              {artistData.invalid_artists.length === 1
-                ? ` "${artistData.invalid_artists[0]}" `
-                : ` "${artistData.invalid_artists[0]}" and "
-                ${artistData.invalid_artists[1]}" `}
-            </span>
+            Sorry,&#160;
+            {artistData.invalid_artists.length === 1 ? (
+              <span>
+                "
+                <span className='special'>{artistData.invalid_artists[0]}</span>
+                "&#160;
+              </span>
+            ) : (
+              <span>
+                "
+                <span className='special'>{artistData.invalid_artists[0]}</span>{' '}
+                " and "
+                <span className='special'>{artistData.invalid_artists[1]}</span>
+                "&#160;
+              </span>
+            )}
             is/are not contained within the database. Please double check your
             spelling and ensure the artist(s) has a Spotify popularity score of
             55 or greater.
@@ -38,3 +47,5 @@ export const ArtistPanel = ({ artistData }) => {
 };
 
 export default ArtistPanel;
+
+// &#160; is the HTML code for "space" as in " "
