@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { FaArrowCircleDown } from 'react-icons/fa';
+import { FaLongArrowAltDown } from 'react-icons/fa';
 import { FaRandom } from 'react-icons/fa';
-import { FaPaperPlane } from 'react-icons/fa';
+import { FaTelegramPlane } from 'react-icons/fa';
 import getPath from '../api/get-path';
 import getRandomArtist from '../api/get-random-artists';
 import ArtistPanel from './ArtistPanel';
@@ -27,7 +27,7 @@ const Interface = () => {
     <>
       <form autoComplete='off'>
         <input id='start-artist-input' type='text' placeholder='Start Artist' />
-        <FaArrowCircleDown
+        <FaLongArrowAltDown
           style={{
             width: '1.5rem',
             height: '1.5rem',
@@ -42,7 +42,7 @@ const Interface = () => {
             onSubmitForm();
           }}
         >
-          <FaPaperPlane style={{ marginRight: '0.2rem' }} />
+          <FaTelegramPlane style={{ marginRight: '0.2rem' }} />
           Let's Go!
         </button>
         <button

@@ -30,7 +30,7 @@ export const ArtistPanel = ({ artistData }) => {
             ) : (
               <span>
                 "
-                <span className='special'>{artistData.invalid_artists[0]}</span>{' '}
+                <span className='special'>{artistData.invalid_artists[0]}</span>
                 " and "
                 <span className='special'>{artistData.invalid_artists[1]}</span>
                 "&#160;
