@@ -1,5 +1,5 @@
-const { findPath } = require('./functionality/find-path');
-const { getRandomArtists } = require('./functionality/get-random-artists');
+const { findPath } = require('./src/find-path');
+const { getRandomArtists } = require('./src/get-random-artists');
 const cors = require('cors');
 const express = require('express');
 const app = express();
