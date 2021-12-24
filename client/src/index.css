@@ -73,7 +73,7 @@ header h4 a {
 }
 
 #description-container {
-  max-width: 450px;
+  max-width: 600px;
   margin: 0 auto;
 }
 
@@ -106,9 +106,9 @@ input[type='text']:focus {
 button {
   border: none;
   background-color: var(--color-green);
-  padding: 0.4rem;
+  color: var(--color-black);
+  padding: 0.5rem 1.2rem;
   margin-top: 0.7rem;
-  width: 9rem;
   font-size: 1.1rem;
   font-family: 'Public Sans', sans-serif;
   border-radius: 2rem;
@@ -143,7 +143,7 @@ button::before {
   grid-template-columns: 1fr 1fr;
   text-align: center;
   margin: 1rem auto;
-  max-width: 900px;
+  max-width: 1200px;
 }
 
 .artist-profile {
@@ -181,15 +181,29 @@ button::before {
 /* ================================ */
 @media (min-width: 600px) {
   header h1 {
-    font-size: 2.5rem;
+    font-size: 3rem;
   }
 
   header h4 {
     padding-bottom: 0.35rem;
+    font-size: 1.3rem;
   }
 
   header h4 a:hover {
     color: var(--color-green);
+  }
+
+  header p {
+    font-size: 1.3rem;
+  }
+
+  input[type='text'] {
+    font-size: 1.5rem;
+  }
+
+  button {
+    font-size: 1.4rem;
+    padding: 0.6rem 1.8rem;
   }
 
   button:hover {
@@ -208,17 +222,33 @@ button::before {
     border-color: var(--color-white);
   }
 
-  #artist-panel {
-    grid-template-columns: 1fr 1fr 1fr;
+  .artist-profile img {
+    width: 11rem;
+    height: 11rem;
+    border: 0.6rem solid var(--color-green);
+  }
+  
+  .artist-profile h4 {
+    font-size: 1.4rem;
   }
 }
 
 @media (min-width: 800px) {
   #artist-panel {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 
   #error-message {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  #artist-panel {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  .artist-profile {
+    margin: 0.5rem 0;
   }
 }

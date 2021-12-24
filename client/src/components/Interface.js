@@ -29,8 +29,8 @@ const Interface = () => {
         <input id='start-artist-input' type='text' placeholder='Start Artist' />
         <FaLongArrowAltDown
           style={{
-            width: '1.5rem',
-            height: '1.5rem',
+            width: '2rem',
+            height: '2rem',
             color: 'var(--color-green)',
             margin: '0.2rem 0',
           }}
