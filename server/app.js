@@ -4,7 +4,6 @@ const cors = require('cors');
 const express = require('express');
 const app = express();
 
-const PORT = process.env.PORT || 5000;
 const CONNECTION_FILE = './data-scrapping/data/connections-55.txt';
 
 // middleware
@@ -44,10 +43,6 @@ app.get('/api/random/', async (req, res) => {
   }
 });
 
-// takes users to homepage if they specify an incorrect route in url
-app.get('*', (req, res) => {
-  res.sendFile('frontend/build/index.html');
-});
-
 // connect to server
+const PORT = process.env.PORT || 5000;
 app.listen(PORT);
