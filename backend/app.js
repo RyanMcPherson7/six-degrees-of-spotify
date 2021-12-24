@@ -7,10 +7,6 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const CONNECTION_FILE = './data-scrapping/data/connections-55.txt';
 
-app.listen(PORT, () => {
-  console.log(`listening on port ${PORT}`);
-});
-
 // middleware
 app.use(cors());
 app.use(express.json());
@@ -39,12 +35,19 @@ app.get('/api/path/:start/:end/', async (req, res) => {
   }
 });
 
-
 // returns an object with a random start and random end artist
 app.get('/api/random/', async (req, res) => {
   try {
     res.json(getRandomArtists(CONNECTION_FILE));
   } catch (err) {
-    console.error(err.message)
+    console.error(err.message);
   }
-})
+});
+
+// takes users to homepage if they specify an incorrect route in url
+app.get('*', (req, res) => {
+  res.sendFile('frontend/build/index.html');
+});
+
+// connect to server
+app.listen(PORT);
