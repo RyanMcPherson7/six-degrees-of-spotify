@@ -26,7 +26,7 @@ const Interface = () => {
   return (
     <>
       <form autoComplete='off'>
-        <input id='start-artist-input' type='text' placeholder='Start Artist' />
+        <input id='start-artist-input' type='text' placeholder='Enter Start Artist' />
         <FaLongArrowAltDown
           style={{
             width: '2rem',
@@ -35,7 +35,7 @@ const Interface = () => {
             margin: '0.2rem 0',
           }}
         />
-        <input id='end-artist-input' type='text' placeholder='End Artist' />
+        <input id='end-artist-input' type='text' placeholder='Enter End Artist' />
         <button
           onClick={(e) => {
             e.preventDefault();
