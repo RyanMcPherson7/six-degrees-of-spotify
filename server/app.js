@@ -14,8 +14,8 @@ app.use(express.json());
 // input from request body
 app.post('/api/path/', async (req, res) => {
   try {
-    const start = req.body.start.toLowerCase();
-    const end = req.body.end.toLowerCase();
+    const start = req.body.start.toLowerCase().trim();
+    const end = req.body.end.toLowerCase().trim();
     res.json(findPath(start, end, CONNECTION_FILE));
   } catch (err) {
     console.error(err.message);
@@ -26,8 +26,8 @@ app.post('/api/path/', async (req, res) => {
 // input from request parameters
 app.get('/api/path/:start/:end/', async (req, res) => {
   try {
-    const start = req.params.start.toLowerCase();
-    const end = req.params.end.toLowerCase();
+    const start = req.params.start.toLowerCase().trim();
+    const end = req.params.end.toLowerCase().trim();
     res.json(findPath(start, end, CONNECTION_FILE));
   } catch (err) {
     console.error(err.message);
