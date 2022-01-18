@@ -2,14 +2,15 @@
   "name": "six-degrees-of-spotify-react",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "server.js",
   "engines": {
     "node": "14.17.4",
     "npm": "6.14.14"
   },
   "scripts": {
-    "start": "node app.js",
-    "watch": "nodemon"
+    "start": "node server.js",
+    "watch": "nodemon",
+    "test": "jest"
   },
   "keywords": [],
   "author": "Ryan McPherson",
@@ -19,6 +20,8 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "jest": "^27.4.7",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.2.1"
   }
 }

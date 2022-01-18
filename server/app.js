@@ -43,6 +43,4 @@ app.get('/api/random/', async (req, res) => {
   }
 });
 
-// connect to server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT);
+module.exports = app;
