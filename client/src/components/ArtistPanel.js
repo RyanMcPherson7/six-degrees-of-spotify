@@ -1,4 +1,5 @@
 import ArtistProfile from './ArtistProfile';
+import { FaArrowsAltH } from 'react-icons/fa';
 
 export const ArtistPanel = ({ artistData }) => {
   return (
@@ -7,13 +8,20 @@ export const ArtistPanel = ({ artistData }) => {
         <ul id='artist-panel'>
           {artistData.path.map((person) => {
             return (
-              <li className='artist-profile' key={person.artist}>
-                <ArtistProfile
-                  artistName={person.artist}
-                  artistId={person.id}
-                  artistImage={person.image}
-                />
-              </li>
+              <>
+                <li className='artist-profile' key={person.artist}>
+                  <ArtistProfile
+                    artistName={person.artist}
+                    artistId={person.id}
+                    artistImage={person.image}
+                  />
+                </li>
+
+                {person.artist !==
+                  artistData.path[artistData.path.length - 1].artist && (
+                  <FaArrowsAltH className='horizontal-double-arrow' />
+                )}
+              </>
             );
           })}
         </ul>
