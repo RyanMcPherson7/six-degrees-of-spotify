@@ -1,10 +1,11 @@
+import Background from './components/Background';
+import Header from './components/Header';
 import Interface from './components/Interface';
-import Header from './components/Header'
 
 function App() {
-  
   return (
     <>
+      <Background />
       <Header />
       <Interface />
     </>

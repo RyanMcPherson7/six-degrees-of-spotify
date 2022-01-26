@@ -1,7 +1,7 @@
 const Header = () => {
   return (
     <header>
-      <h1>Six Degrees of Spotify</h1>
+      <h1>6 Degrees of Spotify</h1>
       <h4>
         Handcrafted by{' '}
         <a
@@ -14,9 +14,11 @@ const Header = () => {
       </h4>
       <div id='description-container'>
         <p>
-          Enter <span className='special'>2 artists</span> and we'll find an{' '}
-          <span className='special'>optimal path</span> between them using
-          Spotify's <span className='special'>related artists feature</span>!
+          Enter <span className='special'>2 popular artists</span> and we'll
+          generate a <span className='special'>graph network</span> based on
+          Spotify's "<span className='special'>fans also listen to</span>"
+          feature to see how <span className='special'>connected</span> your 2
+          artists are!
         </p>
       </div>
     </header>
