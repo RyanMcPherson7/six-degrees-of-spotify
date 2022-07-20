@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "six-degrees-of-spotify-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
