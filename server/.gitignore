@@ -1,3 +1,4 @@
 /data-scrapping/node_modules
 /data-scrapping/.env
 /node_modules
+/coverage

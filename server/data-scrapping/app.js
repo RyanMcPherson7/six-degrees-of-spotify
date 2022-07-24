@@ -1,8 +1,8 @@
 const { populateConnections } = require('./src/populate-connections')
-const { setPopulator } = require('./src/populate-artist-set')
+const { populateArtistIdSet } = require('./src/populate-artist-set')
 
-const SOURCE = [
-  // ['Justin Bieber|1uNFoZAHBGtllmzznpCI3s|https://i.scdn.co/image/ab6761610000e5eb8ae7f2aaa9817a704a87ea36', '1uNFoZAHBGtllmzznpCI3s'],
+const SEEDING_ARTIST_LIST = [
+  ['Justin Bieber|1uNFoZAHBGtllmzznpCI3s|https://i.scdn.co/image/ab6761610000e5eb8ae7f2aaa9817a704a87ea36', '1uNFoZAHBGtllmzznpCI3s'],
   // ['Vance Joy|10exVja0key0uqUkk6LJRT|https://i.scdn.co/image/ab6761610000e5eb6eec1cb0c7939757b719ff4d', '10exVja0key0uqUkk6LJRT'],
   // ['Ed Sheeran|6eUKZXaKkcviH0Ku9w2n3V|https://i.scdn.co/image/ab6761610000e5eb12a2ef08d00dd7451a6dbed6', '6eUKZXaKkcviH0Ku9w2n3V'],
   // ['Pitbull|0TnOYISbd1XYRBk9myaseg|https://i.scdn.co/image/ab6761610000e5eb2dc40ac263ef07c16a95af4e', '0TnOYISbd1XYRBk9myaseg'],
@@ -64,19 +64,21 @@ const SOURCE = [
   // ['Weezer|3jOstUTkEu2JkjvRdBA5Gu|https://i.scdn.co/image/ab6761610000e5ebef2e09aeedd0d8f842d1a690', '3jOstUTkEu2JkjvRdBA5Gu'],
   // ['Dolly Parton|32vWCbZh0xZ4o9gkz4PsEU|https://i.scdn.co/image/ab6761610000e5eb20ee5dd7929b2eb0b8886cac', '32vWCbZh0xZ4o9gkz4PsEU'],
   // ['', ''],
-];
+]
 
-const ARTIST_SET_ID_FILE = './data/artist-set-id-55.txt';
-const CONNECTIONS_FILE = './data/connections-55.txt';
-const ARTIST_ID_SET = setPopulator(ARTIST_SET_ID_FILE);
-const POPULARITY = 55;
+// const ARTIST_SET_ID_FILE = './data/artist-set-id-55.txt'
+const ARTIST_SET_ID_FILE = './data/set-test.txt'
+// const CONNECTIONS_FILE = './data/connections-55.txt'
+const CONNECTIONS_FILE = './data/con-test.txt'
+const ARTIST_ID_SET = populateArtistIdSet(ARTIST_SET_ID_FILE)
+const POPULARITY = 55
 
 setTimeout(() => {
   populateConnections(
-    SOURCE,
+    SEEDING_ARTIST_LIST,
     ARTIST_ID_SET,
     ARTIST_SET_ID_FILE,
     CONNECTIONS_FILE,
     POPULARITY
-  );
-}, 5000);
+  )
+}, 5000)
