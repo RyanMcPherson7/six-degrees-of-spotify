@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "watch": "nodemon",
-    "test": "jest",
+    "test": "jest --coverage",
     "lint": "eslint **/*.js",
     "lint:fix": "eslint **/*.js --fix"
   },
