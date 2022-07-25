@@ -16,6 +16,8 @@
     "spaced-comment": "warn",
     "prefer-destructuring": "off",
     "no-plusplus": "off",
-    "no-await-in-loop": "off"
+    "no-await-in-loop": "off",
+    "no-continue": "off",
+    "no-loop-func": "off"
   }
 }

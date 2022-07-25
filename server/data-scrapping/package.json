@@ -4,8 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node app.js",
+    "start:rebuild:windows": "set REBUILD=true && npm run start",
+    "start:rebuild:unix": "REBUILD=true && npm run start"
   },
   "keywords": [],
   "author": "Ryan McPherson",

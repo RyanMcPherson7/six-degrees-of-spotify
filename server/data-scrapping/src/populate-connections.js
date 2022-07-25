@@ -10,12 +10,13 @@ const { Queue } = require('../../src/classes/queue')
  */
 const populateConnections = async (
   seedingArtistList,
-  artistIdSet,
-  artistIdSetFile,
   connectionsFile,
   popularityThreshold
 ) => {
+  const startTime = Date.now()
+  const artistIdSet = new Set()
   const bearerToken = await getBearerToken()
+  let numConnect = 0
 
   // loading data into queue from source
   const processingQueue = new Queue()
@@ -32,50 +33,61 @@ const populateConnections = async (
       const fromArtistContentString = fromArtist.artistContentString
       const fromArtistId = fromArtist.artistId
 
-      // process id if not already processed
-      if (!artistIdSet.has(fromArtistId)) {
-        const res = await getRelatedArtists(fromArtistId, bearerToken)
-        const relatedArtistList = res.artists
-
-        // adding artist to computed set
-        artistIdSet.add(fromArtistId)
-        fs.appendFile(artistIdSetFile, `${fromArtistId},`, (err) => {
-          if (err) throw err
-        })
-
-        // reviewing each related artist
-        relatedArtistList.forEach((toArtist) => {
-          // only process artist if popular enough
-          if (toArtist.popularity < popularityThreshold) return
-
-          const toArtistContentString = `${toArtist.name}|${toArtist.id}|${
-            toArtist.images.length > 0
-              ? toArtist.images[0].url
-              : 'IMAGE NOT AVAILABLE'
-          }`
-
-          processingQueue.enqueue({
-            artistContentString: toArtistContentString,
-            artistId: toArtist.id,
-          })
-
-          fs.appendFile(
-            connectionsFile,
-            `${fromArtistContentString} -> ${toArtistContentString}\n`,
-            (err) => {
-              if (err) throw err
-            }
-          )
-        })
+      // don't process artist if already processed
+      if (artistIdSet.has(fromArtistId)) {
+        continue
       }
-      console.log('# of unique artists found: ', artistIdSet.size)
+
+      // TODO: should add handler for when Spotify rate limits us TryCatch block maybe
+      const res = await getRelatedArtists(fromArtistId, bearerToken)
+      const relatedArtistList = res.artists
+
+      // adding artist to computed set
+      artistIdSet.add(fromArtistId)
+
+      // reviewing each related artist
+      relatedArtistList.forEach((toArtist) => {
+        // only process artist if popular enough
+        if (toArtist.popularity < popularityThreshold) {
+          return
+        }
+
+        const toArtistContentString = `${toArtist.name}|${toArtist.id}|${
+          toArtist.images.length > 0
+            ? toArtist.images[0].url
+            : 'IMAGE NOT AVAILABLE'
+        }`
+
+        processingQueue.enqueue({
+          artistContentString: toArtistContentString,
+          artistId: toArtist.id,
+        })
+
+        fs.appendFile(
+          connectionsFile,
+          `${fromArtistContentString} -> ${toArtistContentString}\n`,
+          (err) => {
+            if (err) throw err
+          }
+        )
+
+        numConnect++
+      })
+
+      console.log('Artists:', artistIdSet.size, '& Connections:', numConnect)
     }
   }
 
-  console.log('processing queue is empty')
+  const endTime = Date.now()
+  const numMinutes = Math.floor((endTime - startTime) / 1000 / 60)
+  const numSeconds = Math.floor((endTime - startTime) / 1000) % 60
+  console.log('Process took', numMinutes, 'minutes &', numSeconds, 'seconds')
 }
 
-// reading already processed artists
+/*
+ * converts already processed artist ids contained withing artistIdSetFile
+ * and converts them to a set
+ */
 const populateArtistIdSet = (artistIdSetFile) => {
   const artistIdSet = new Set()
   fs.readFile(artistIdSetFile, 'utf8', (err, data) => {
@@ -90,4 +102,11 @@ const populateArtistIdSet = (artistIdSetFile) => {
   return artistIdSet
 }
 
-module.exports = { populateConnections, populateArtistIdSet }
+// deletes all contents inside a file
+const resetFile = (fileName) => {
+  fs.writeFileSync(fileName, '', (err) => {
+    if (err) throw err
+  })
+}
+
+module.exports = { populateConnections, populateArtistIdSet, resetFile }
