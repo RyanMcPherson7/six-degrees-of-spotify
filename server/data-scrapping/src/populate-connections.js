@@ -38,7 +38,6 @@ const populateConnections = async (
         continue
       }
 
-      // TODO: should add handler for when Spotify rate limits us TryCatch block maybe
       const res = await getRelatedArtists(fromArtistId, bearerToken)
       const relatedArtistList = res.artists
 

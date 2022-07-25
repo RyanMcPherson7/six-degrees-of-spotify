@@ -1,5 +1,5 @@
 const config = {
-  connectionsFile: './data/con-test.txt',
+  connectionsFile: './data/connections-50.txt',
   popularityThreshold: 50,
   seedingArtistList: [
     {
