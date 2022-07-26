@@ -1,32 +1,35 @@
-const { Queue } = require('./classes/queue');
+const { Queue } = require('./classes/queue')
 
-exports.BFS = (graph, start, end) => {
-  let visited = new Set();
-  let parent = new Map();
-  let q = new Queue();
-  let found = false;
+const BFS = (graph, start, end) => {
+  const visited = new Set()
+  const parent = new Map()
+  const q = new Queue()
+  let found = false
 
-  q.enqueue(start);
-  visited.add(start);
-  parent.set(start, '-1');
+  q.enqueue(start)
+  visited.add(start)
+  parent.set(start, '-1')
 
-  if (start === end) 
-    return parent;
+  if (start === end) {
+    return parent
+  }
 
   while (!q.empty() && !found) {
-    const front = q.dequeue();
+    const front = q.dequeue()
 
     graph.adjList.get(front).forEach((neighbor) => {
       if (neighbor === end) {
-        parent.set(end, front);
-        found = true;
+        parent.set(end, front)
+        found = true
       } else if (!visited.has(neighbor)) {
-        q.enqueue(neighbor);
-        parent.set(neighbor, front);
-        visited.add(neighbor);
+        q.enqueue(neighbor)
+        parent.set(neighbor, front)
+        visited.add(neighbor)
       }
-    });
+    })
   }
 
-  return parent;
-};
+  return parent
+}
+
+module.exports = { BFS }
