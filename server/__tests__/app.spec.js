@@ -1,6 +1,6 @@
 /* eslint no-undef: 0 */
 const request = require('supertest')
-const app = require('./app')
+const app = require('../app')
 
 describe('GET /api/path/:start/:end', () => {
   it('should return a 200 response', async () => {
