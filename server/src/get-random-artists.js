@@ -1,28 +1,30 @@
-const fs = require('fs');
+const fs = require('fs')
+const { findPath } = require('./find-path')
 
-exports.getRandomArtists = (connectionsFile) => {
-  let artistList = [];
-  let randomCouple = [];
+const getRandomArtists = (connectionsFile) => {
+  const artistList = []
+  const artistData = fs.readFileSync(connectionsFile, { encoding: 'utf8' })
+  const artistContentStringList = artistData.split('\n')
 
-  let data = fs.readFileSync(connectionsFile, { encoding: 'utf8' });
-  data = data.split('\n');
+  // remove empty line at end of connection file
+  artistContentStringList.pop()
 
   // populating artist list
-  data.forEach((connection) => {
-    const [artistName] = connection.split('|');
-    artistList.push(artistName);
-  });
+  artistContentStringList.forEach((connection) => {
+    const [artistName] = connection.split('|')
+    artistList.push(artistName)
+  })
 
   // getting 2 random artists from artist list
-  for (let i = 0; i < 2; i++)
-    randomCouple.push(
-      artistList[Math.floor(Math.random() * artistList.length)]
-    );
+  const start = artistList[Math.floor(Math.random() * artistList.length)]
+  const end = artistList[Math.floor(Math.random() * artistList.length)]
+  const path = findPath(start.toLowerCase(), end.toLowerCase(), connectionsFile)
 
-  const randomRes = {
-    start: randomCouple[0],
-    end: randomCouple[1],
-  };
+  return {
+    start,
+    end,
+    ...path,
+  }
+}
 
-  return randomRes;
-};
+module.exports = { getRandomArtists }

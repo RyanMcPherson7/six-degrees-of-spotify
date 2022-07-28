@@ -1,25 +1,35 @@
-exports.Stack = class {
+const Stack = class {
   constructor() {
-    this.store = [];
+    this.store = []
   }
 
-  push = (elem) => {
-    return this.store.push(elem);
-  };
+  push(elem) {
+    return this.store.push(elem)
+  }
 
-  pop = () => {
-    if (!this.empty()) return this.store.pop();
-  };
+  pop() {
+    if (this.empty()) {
+      throw new RangeError('stack is empty')
+    }
 
-  top = () => {
-    if (!this.empty()) return this.store[this.store.length - 1];
-  };
+    return this.store.pop()
+  }
 
-  empty = () => {
-    return this.store.length === 0 ? true : false;
-  };
+  top() {
+    if (this.empty()) {
+      throw new RangeError('stack is empty')
+    }
 
-  size = () => {
-    return this.store.length;
-  };
-};
+    return this.store[this.store.length - 1]
+  }
+
+  empty() {
+    return !this.store.length
+  }
+
+  size() {
+    return this.store.length
+  }
+}
+
+module.exports = { Stack }

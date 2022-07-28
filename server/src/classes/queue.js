@@ -1,25 +1,35 @@
-exports.Queue = class {
+const Queue = class {
   constructor() {
-    this.store = [];
+    this.store = []
   }
 
-  enqueue = (elem) => {
-    return this.store.push(elem);
-  };
+  enqueue(elem) {
+    return this.store.push(elem)
+  }
 
-  dequeue = () => {
-    if (!this.empty()) return this.store.shift();
-  };
+  dequeue() {
+    if (this.empty()) {
+      throw new RangeError('queue is empty')
+    }
 
-  peek = () => {
-    if (!this.empty()) return this.store[0];
-  };
+    return this.store.shift()
+  }
 
-  empty = () => {
-    return this.store.length === 0 ? true : false;
-  };
+  peek() {
+    if (this.empty()) {
+      throw new RangeError('queue is empty')
+    }
 
-  size = () => {
-    return this.store.length;
-  };
-};
+    return this.store[0]
+  }
+
+  empty() {
+    return !this.store.length
+  }
+
+  size() {
+    return this.store.length
+  }
+}
+
+module.exports = { Queue }
