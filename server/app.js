@@ -12,15 +12,18 @@ app.use(express.json())
 
 // takes input from request body and returns path with artist names, ids, and images
 app.post('/api/path/', (req, res) => {
-  const start = req.body.start.toLowerCase().trim()
-  const end = req.body.end.toLowerCase().trim()
+  // const start = req.body.start.toLowerCase().trim()
+  // const end = req.body.end.toLowerCase().trim()
+  const start = (req.body.start || '').toLowerCase().trim()
+  const end = (req.body.end || '').toLowerCase().trim()
+
   res.json(findPath(start, end, config.connectionsFile))
 })
 
-// takes input from request params and returns path with artist names, ids, and images
-app.get('/api/path/:start/:end/', (req, res) => {
-  const start = req.params.start.toLowerCase().trim()
-  const end = req.params.end.toLowerCase().trim()
+// takes input from query string and returns path with artist names, ids, and images
+app.get('/api/path/', (req, res) => {
+  const start = (req.query.start || '').toLowerCase().trim()
+  const end = (req.query.end || '').toLowerCase().trim()
   res.json(findPath(start, end, config.connectionsFile))
 })
 

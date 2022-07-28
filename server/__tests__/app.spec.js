@@ -2,10 +2,12 @@
 const request = require('supertest')
 const app = require('../app')
 
-describe('GET /api/path/:start/:end', () => {
+describe('GET /api/path?start=&end=', () => {
   it('should return a 200 response', async () => {
     // Act
-    const res = await request(app).get('/api/path/Kanye West/The Beatles')
+    const res = await request(app).get(
+      '/api/path?start=Kanye West&end=The Beatles'
+    )
 
     // Assert
     expect(res.statusCode).toBe(200)
@@ -13,7 +15,9 @@ describe('GET /api/path/:start/:end', () => {
 
   it('should return json data', async () => {
     // Act
-    const res = await request(app).get('/api/path/Kanye West/The Beatles')
+    const res = await request(app).get(
+      '/api/path?start=Kanye West&end=The Beatles'
+    )
 
     // Assert
     expect(res.headers['content-type']).toEqual(expect.stringContaining('json'))
@@ -21,12 +25,15 @@ describe('GET /api/path/:start/:end', () => {
 
   it('should set "valid" to true when input is valid', async () => {
     // Act
-    const res1 = await request(app).get('/api/path/Kanye West/The Beatles')
+    const res1 = await request(app).get(
+      '/api/path?start=Kanye West&end=The Beatles'
+    )
     const res2 = await request(app).get(
-      '/api/path/EMPIRE OF THE SUN/TAME IMPALA'
+      // '/api/path/EMPIRE OF THE SUN/TAME IMPALA'
+      '/api/path?start=EMPIRE OF THE SUN&end=TAME IMPALA'
     )
     const res3 = await request(app).get(
-      '/api/path/taylor swift/backstreet boys'
+      '/api/path?start=taylor swift&end=backstreet boys'
     )
 
     // Assert
@@ -35,11 +42,11 @@ describe('GET /api/path/:start/:end', () => {
     expect(res3.body.valid).toEqual(true)
   })
 
-  it('should set "valid" to false when input is invalid', async () => {
+  it('should set "valid" to false when input is invalid or not provided', async () => {
     // Act
-    const res1 = await request(app).get('/api/path/1234/abcd')
-    const res2 = await request(app).get('/api/path/5678/efgh')
-    const res3 = await request(app).get('/api/path/7777/ijkl')
+    const res1 = await request(app).get('/api/path?start=1234&end=abcd')
+    const res2 = await request(app).get('/api/path?start=5678')
+    const res3 = await request(app).get('/api/path?end=ijkl')
 
     // Assert
     expect(res1.body.valid).toEqual(false)
@@ -49,7 +56,9 @@ describe('GET /api/path/:start/:end', () => {
 
   it('should send a response containing the path', async () => {
     // Act
-    const res = await request(app).get('/api/path/Kanye West/The Beatles')
+    const res = await request(app).get(
+      '/api/path?start=Kanye West&end=The Beatles'
+    )
 
     // Assert
     expect(res.body.valid).toEqual(true)
@@ -58,7 +67,9 @@ describe('GET /api/path/:start/:end', () => {
 
   it('should send a response containing the path with a single artist', async () => {
     // Act
-    const res = await request(app).get('/api/path/Kanye West/Kanye West')
+    const res = await request(app).get(
+      '/api/path?start=Kanye West&end=Kanye West'
+    )
 
     // Assert
     expect(res.body.valid).toEqual(true)
@@ -67,9 +78,9 @@ describe('GET /api/path/:start/:end', () => {
 
   it('should send a response containing a list of invalid artists', async () => {
     // Act
-    const res1 = await request(app).get('/api/path/1234/abcd')
-    const res2 = await request(app).get('/api/path/5678/Kanye West')
-    const res3 = await request(app).get('/api/path/Kanye West/ijkl')
+    const res1 = await request(app).get('/api/path?start=1234&end=abcd')
+    const res2 = await request(app).get('/api/path?start=5678&end=Kanye West')
+    const res3 = await request(app).get('/api/path?start=Kanye West&end=ijkl')
 
     // Assert
     expect(res1.body.invalid_artists).toEqual(['1234', 'abcd'])
@@ -122,7 +133,7 @@ describe('POST /api/path', () => {
     expect(res3.body.valid).toEqual(true)
   })
 
-  it('should set "valid" to false when input is invalid', async () => {
+  it('should set "valid" to false when input is invalid or not provided', async () => {
     // Act
     const res1 = await request(app).post('/api/path').send({
       start: '1234',
@@ -130,10 +141,8 @@ describe('POST /api/path', () => {
     })
     const res2 = await request(app).post('/api/path').send({
       start: '5678',
-      end: 'efgh',
     })
     const res3 = await request(app).post('/api/path').send({
-      start: '7777',
       end: 'ijkl',
     })
 
