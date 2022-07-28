@@ -12,8 +12,6 @@ app.use(express.json())
 
 // takes input from request body and returns path with artist names, ids, and images
 app.post('/api/path/', (req, res) => {
-  // const start = req.body.start.toLowerCase().trim()
-  // const end = req.body.end.toLowerCase().trim()
   const start = (req.body.start || '').toLowerCase().trim()
   const end = (req.body.end || '').toLowerCase().trim()
 
