@@ -1,4 +1,5 @@
 const fs = require('fs')
+const { findPath } = require('./find-path')
 
 const getRandomArtists = (connectionsFile) => {
   const artistList = []
@@ -15,12 +16,15 @@ const getRandomArtists = (connectionsFile) => {
   })
 
   // getting 2 random artists from artist list
-  const randomRes = {
-    start: artistList[Math.floor(Math.random() * artistList.length)],
-    end: artistList[Math.floor(Math.random() * artistList.length)],
-  }
+  const start = artistList[Math.floor(Math.random() * artistList.length)]
+  const end = artistList[Math.floor(Math.random() * artistList.length)]
+  const path = findPath(start.toLowerCase(), end.toLowerCase(), connectionsFile)
 
-  return randomRes
+  return {
+    start,
+    end,
+    ...path,
+  }
 }
 
 module.exports = { getRandomArtists }

@@ -206,7 +206,7 @@ describe('GET /api/random/', () => {
     expect(res.headers['content-type']).toEqual(expect.stringContaining('json'))
   })
 
-  it('should return 2 valid artist names', async () => {
+  it('should return 2 valid artist names and path', async () => {
     // Act
     const res = await request(app).get('/api/random/')
     const randomPathRes = await request(app).post('/api/path').send({
@@ -218,5 +218,7 @@ describe('GET /api/random/', () => {
     expect(res.body.start).toBeTruthy()
     expect(res.body.end).toBeTruthy()
     expect(randomPathRes.body.valid).toEqual(true)
+    expect(res.body.path).not.toBeNull()
+    expect(res.body.valid).toEqual(true)
   })
 })
