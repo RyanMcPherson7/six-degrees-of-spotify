@@ -69,6 +69,16 @@ describe('classes', () => {
       expect(secondItem).toEqual(2)
     })
 
+    it('should error if dequeue is called on an empty queue', () => {
+      // Arrange
+      const queue = new Queue()
+      queue.enqueue(1)
+      queue.dequeue()
+
+      // Act + Assert
+      expect(() => queue.dequeue()).toThrow(RangeError)
+    })
+
     it('should return the front item in the queue', () => {
       // Arrange
       const queue = new Queue()
@@ -81,6 +91,16 @@ describe('classes', () => {
 
       // Assert
       expect(first).toEqual(1)
+    })
+
+    it('should error if peek is called on an empty queue', () => {
+      // Arrange
+      const queue = new Queue()
+      queue.enqueue(1)
+      queue.dequeue()
+
+      // Act + Assert
+      expect(() => queue.peek()).toThrow(RangeError)
     })
 
     it('should return true when empty', () => {
@@ -165,6 +185,16 @@ describe('classes', () => {
       expect(secondItem).toEqual(2)
     })
 
+    it('should error if pop is called on an empty stack', () => {
+      // Arrange
+      const stack = new Stack()
+      stack.push(1)
+      stack.pop()
+
+      // Act + Assert
+      expect(() => stack.pop()).toThrow(RangeError)
+    })
+
     it('should return the top item of the stack', () => {
       // Arrange
       const stack = new Stack()
@@ -177,6 +207,16 @@ describe('classes', () => {
 
       // Assert
       expect(top).toEqual(3)
+    })
+
+    it('should error if top is called on an empty stack', () => {
+      // Arrange
+      const stack = new Stack()
+      stack.push(1)
+      stack.pop()
+
+      // Act + Assert
+      expect(() => stack.top()).toThrow(RangeError)
     })
 
     it('should return true when empty', () => {

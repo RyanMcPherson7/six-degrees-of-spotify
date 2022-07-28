@@ -8,15 +8,19 @@ const Queue = class {
   }
 
   dequeue() {
-    if (!this.empty()) {
-      return this.store.shift()
+    if (this.empty()) {
+      throw new RangeError('queue is empty')
     }
+
+    return this.store.shift()
   }
 
   peek() {
-    if (!this.empty()) {
-      return this.store[0]
+    if (this.empty()) {
+      throw new RangeError('queue is empty')
     }
+
+    return this.store[0]
   }
 
   empty() {

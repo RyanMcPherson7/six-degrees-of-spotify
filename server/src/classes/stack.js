@@ -8,15 +8,19 @@ const Stack = class {
   }
 
   pop() {
-    if (!this.empty()) {
-      return this.store.pop()
+    if (this.empty()) {
+      throw new RangeError('stack is empty')
     }
+
+    return this.store.pop()
   }
 
   top() {
-    if (!this.empty()) {
-      return this.store[this.store.length - 1]
+    if (this.empty()) {
+      throw new RangeError('stack is empty')
     }
+
+    return this.store[this.store.length - 1]
   }
 
   empty() {
