@@ -1,4 +1,4 @@
-const { Queue } = require('./classes/queue')
+const { Queue } = require('../classes/queue')
 
 const BFS = (graph, start, end) => {
   const visited = new Set()
