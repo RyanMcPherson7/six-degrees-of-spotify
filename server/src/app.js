@@ -1,9 +1,9 @@
 const express = require('express')
 const cors = require('cors')
 const path = require('path')
-const { findPath } = require('./src/find-path')
-const { getRandomArtists } = require('./src/get-random-artists')
-const config = require('./data-scrapping/config/config')
+const { findPath } = require('./functions/find-path')
+const { getRandomArtists } = require('./functions/get-random-artists')
+const config = require('../data-scrapping/config/config')
 
 const app = express()
 
@@ -32,9 +32,9 @@ app.get('/api/random/', (req, res) => {
 
 // serve static client files in production
 if (process.env.PRODUCTION) {
-  app.use(express.static(path.join(__dirname, '../client/build')))
+  app.use(express.static(path.join(__dirname, '../../client/build')))
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build/index.html'))
+    res.sendFile(path.join(__dirname, '../../client/build/index.html'))
   })
 }
 

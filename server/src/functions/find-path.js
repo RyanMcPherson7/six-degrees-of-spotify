@@ -1,6 +1,6 @@
 const { BFS } = require('./bfs')
-const { Stack } = require('./classes/stack')
-const { Graph } = require('./classes/graph')
+const { Stack } = require('../classes/stack')
+const { Graph } = require('../classes/graph')
 const { populateGraph } = require('./populate-graph')
 
 const findPath = (start, end, connectionsFile) => {
