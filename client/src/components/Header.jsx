@@ -12,7 +12,7 @@ const Header = () => (
       </a>
     </h4>
     <div id="description-container">
-      <p>
+      <p id="description-message">
         Enter <span className="special">2 popular artists</span> and we'll
         generate a <span className="special">graph network</span> based on
         Spotify's "<span className="special">fans also listen to</span>" feature

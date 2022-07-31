@@ -99,6 +99,10 @@ header h4 a {
   margin: 0 auto;
 }
 
+#description-message {
+  line-height: 1.8rem;
+}
+
 /* ================================ */
 /*            USER INPUT            */
 /* ================================ */
@@ -206,7 +210,7 @@ button::before {
 #error-message {
   text-align: center;
   margin: 1.5rem;
-  line-height: 1.5rem;
+  line-height: 1.8rem;
 }
 
 /* ================================ */

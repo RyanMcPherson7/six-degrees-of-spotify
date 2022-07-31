@@ -25,7 +25,7 @@ export const ArtistPanel = ({ pathApiRes }) =>
   ) : (
     <div id="error-message-container">
       <h4 id="error-message">
-        Sorry,&#160;
+        Whoops!&#160;
         {pathApiRes.invalid_artists.length === 1 ? (
           <span>
             "<span className="special">{pathApiRes.invalid_artists[0]}</span>
@@ -39,9 +39,8 @@ export const ArtistPanel = ({ pathApiRes }) =>
             "&#160;
           </span>
         )}
-        is/are not contained within the database. Please double check your
-        spelling and ensure the artist(s) has a Spotify popularity score of 55
-        or greater.
+        was/were not found in our database. Names must be exact and artists must
+        have a Spotify popularity score of 50 or greater.
       </h4>
     </div>
   )
