@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 const ArtistProfile = ({ artistName, artistId, artistImage }) => {
   const cleanedArtistImage =
     artistImage === 'IMAGE NOT AVAILABLE'
-      ? 'https://tse3.mm.bing.net/th?id=OIP.zW0R7waKPw1IOmG3METk6gHaHa&pid=Api'
+      ? './blank-profile-pic.jpg'
       : artistImage
 
   return (
