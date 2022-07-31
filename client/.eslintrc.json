@@ -1,4 +1,7 @@
 {
+  "env": {
+    "browser": true
+  },
   "extends": ["plugin:react/recommended", "airbnb", "prettier"],
   "parserOptions": {
     "ecmaFeatures": {
@@ -20,6 +23,10 @@
     ],
     "no-unused-vars": "warn",
     "func-names": "off",
-    "spaced-comment": "warn"
+    "spaced-comment": "warn",
+    "react/react-in-jsx-scope": "off",
+    "react/function-component-definition": "off",
+    "import/no-named-as-default": "off",
+    "react/no-unescaped-entities": "off"
   }
 }
