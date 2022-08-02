@@ -7,8 +7,8 @@
     "start": "node src/server.js",
     "watch": "nodemon",
     "test": "jest --coverage",
-    "lint": "eslint **/*.js",
-    "lint:fix": "eslint **/*.js --fix",
+    "lint": "eslint src/**/*.js",
+    "lint:fix": "npm run lint -- --fix",
     "start:prod:windows": "set PRODUCTION=true && npm run start",
     "start:prod:unix": "PRODUCTION=true && npm run start"
   },
