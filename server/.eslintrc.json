@@ -1,7 +1,7 @@
 {
   "extends": ["airbnb-base", "prettier"],
   "plugins": ["prettier"],
-  "ignorePatterns": ["**/node_modules/**/*"],
+  "ignorePatterns": ["**/node_modules"],
   "rules": {
     "prettier/prettier": [
       "warn",
