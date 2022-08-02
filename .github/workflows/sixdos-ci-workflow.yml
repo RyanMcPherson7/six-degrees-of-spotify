@@ -1,0 +1,27 @@
+name: Six Degrees of Spotify Continuous Integration
+on: [push, pull_requests]
+  branches-ignore: 
+    - main
+
+jobs: 
+  build: 
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with: 
+          node-version: 16
+      - name: package client
+        run: cd client
+        run: npm ci
+      - name: lint client
+        run: npm run lint
+      - name: build client
+        run: npm run build
+      - name: package server
+        run: cd ../server
+        run: npm ci
+      - name: lint server
+        run: npm run lint
+      - name: test server
+        run: npm run test
