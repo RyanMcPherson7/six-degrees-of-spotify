@@ -14,15 +14,17 @@ jobs:
         with: 
           node-version: 16
       - name: package client
-        run: cd client
-        run: npm ci
+        run: |
+          cd client
+          npm ci
       - name: lint client
         run: npm run lint
       - name: build client
         run: npm run build
       - name: package server
-        run: cd ../server
-        run: npm ci
+        run: |
+          cd ../server
+          npm ci
       - name: lint server
         run: npm run lint
       - name: test server
