@@ -18,14 +18,23 @@ jobs:
           cd client
           npm ci
       - name: lint client
-        run: npm run lint
+        run: |
+          cd client
+          npm run lint
       - name: build client
-        run: npm run build
+        run: |
+          cd client
+          npm run build
       - name: package server
         run: |
-          cd ../server
+          cd server
           npm ci
       - name: lint server
-        run: npm run lint
+        run: |
+          cd server
+          npm run lint
       - name: test server
         run: npm run test
+        run: |
+          cd server 
+          npm run test
