@@ -35,6 +35,7 @@ const findPath = (start, end, connectionsFile) => {
   stk.push(end)
   let parent = paths.get(end)
 
+  // backtracking
   while (parent !== '-1') {
     stk.push(parent)
     parent = paths.get(parent)

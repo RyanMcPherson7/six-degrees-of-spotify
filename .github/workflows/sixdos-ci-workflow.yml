@@ -1,4 +1,4 @@
-name: Six Degrees of Spotify Continuous Integration
+name: SixDoS Continuous Integration
 
 on: 
   push:
