@@ -10,7 +10,7 @@
     "lint": "eslint src/**/*.js",
     "lint:fix": "npm run lint -- --fix",
     "start:prod:windows": "set PRODUCTION=true && npm run start",
-    "start:prod:unix": "PRODUCTION=true && npm run start"
+    "start:prod:unix": "export PRODUCTION=true && npm run start"
   },
   "keywords": [],
   "author": "Ryan McPherson",
