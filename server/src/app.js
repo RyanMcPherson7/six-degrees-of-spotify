@@ -3,9 +3,9 @@ const cors = require('cors')
 const path = require('path')
 const { findPath } = require('./functions/find-path')
 const { getRandomArtists } = require('./functions/get-random-artists')
-const config = require('../data-scrapping/config/config')
 
 const app = express()
+const connectionFile = './data/connections-50.txt'
 
 app.use(cors())
 app.use(express.json())
@@ -15,19 +15,19 @@ app.post('/api/path/', (req, res) => {
   const start = (req.body.start || '').toLowerCase().trim()
   const end = (req.body.end || '').toLowerCase().trim()
 
-  res.json(findPath(start, end, config.connectionsFile))
+  res.json(findPath(start, end, connectionFile))
 })
 
 // takes input from query string and returns path with artist names, ids, and images
 app.get('/api/path/', (req, res) => {
   const start = (req.query.start || '').toLowerCase().trim()
   const end = (req.query.end || '').toLowerCase().trim()
-  res.json(findPath(start, end, config.connectionsFile))
+  res.json(findPath(start, end, connectionFile))
 })
 
 // returns an object with a random start and random end artist
 app.get('/api/random/', (req, res) => {
-  res.json(getRandomArtists(config.connectionsFile))
+  res.json(getRandomArtists(connectionFile))
 })
 
 // serve static client files in production

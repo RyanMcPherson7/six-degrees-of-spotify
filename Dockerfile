@@ -1,21 +1,25 @@
 # build static client files
 FROM node:lts-alpine as builder
 
-WORKDIR /client
-COPY /client/package*.json .
-RUN npm ci --only=production
+COPY ./client/package*.json .
+RUN npm ci --omit=dev
 
-COPY ["/client/src", "/client/public", "./"]
+COPY ./client/public ./public
+COPY ./client/src ./src
 RUN npm run build
 
 # build and run server
 FROM node:lts-alpine
 
-COPY --from=builder /client/build /client/
+RUN mkdir -p client
+COPY --from=builder ./build ./client/build
 
 WORKDIR /server
-COPY /server/package*.json .
-RUN npm ci --only=production
+COPY ./server/package*.json .
+RUN npm ci --omit=dev
 
-COPY ["/server/src", "/server/data", "./"]
-RUN npm run start:prod:unix
+COPY ./server/src ./src
+COPY ./server/data ./data
+
+EXPOSE 5000
+CMD ["npm", "run", "start:prod:unix"]
