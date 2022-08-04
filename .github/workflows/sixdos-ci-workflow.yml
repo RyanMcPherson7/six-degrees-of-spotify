@@ -1,4 +1,4 @@
-name: SixDoS Continuous Integration
+name: SixDoS Integration
 
 on: 
   push:
@@ -37,3 +37,5 @@ jobs:
         run: |
           cd server 
           npm run test
+      -name: Docker
+        run: docker build -t sixdos .
