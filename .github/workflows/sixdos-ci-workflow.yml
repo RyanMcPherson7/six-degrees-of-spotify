@@ -37,5 +37,5 @@ jobs:
         run: |
           cd server 
           npm run test
-      -name: Docker
+      - name: Docker
         run: docker build -t sixdos .

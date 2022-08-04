@@ -1,7 +1,7 @@
 # build static client files
 FROM node:lts-alpine as builder
 
-COPY ./client/package*.json .
+COPY ./client/package*.json ./
 RUN npm ci --omit=dev
 
 COPY ./client/public ./public
@@ -15,7 +15,7 @@ RUN mkdir -p client
 COPY --from=builder ./build ./client/build
 
 WORKDIR /server
-COPY ./server/package*.json .
+COPY ./server/package*.json ./
 RUN npm ci --omit=dev
 
 COPY ./server/src ./src
