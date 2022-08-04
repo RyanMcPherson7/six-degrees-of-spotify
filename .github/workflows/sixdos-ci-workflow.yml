@@ -1,4 +1,4 @@
-name: SixDoS Continuous Integration
+name: SixDoS Integration
 
 on: 
   push:
