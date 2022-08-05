@@ -30,11 +30,6 @@ app.get('/api/random/', (req, res) => {
   res.json(getRandomArtists(connectionsFile))
 })
 
-// FIXME: remove this route, only for testing purposes
-app.get('/data/', (req, res) => {
-  res.sendFile(path.join(__dirname, `../${connectionsFile}`))
-})
-
 // serve static client files in production
 if (process.env.PRODUCTION) {
   app.use(express.static(path.join(__dirname, '../../client/build')))
