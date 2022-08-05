@@ -5,7 +5,7 @@ const { findPath } = require('./functions/find-path')
 const { getRandomArtists } = require('./functions/get-random-artists')
 
 const app = express()
-const connectionFile = './data/connections-50.txt'
+const connectionsFile = './data/connections-50.txt'
 
 app.use(cors())
 app.use(express.json())
@@ -15,19 +15,24 @@ app.post('/api/path/', (req, res) => {
   const start = (req.body.start || '').toLowerCase().trim()
   const end = (req.body.end || '').toLowerCase().trim()
 
-  res.json(findPath(start, end, connectionFile))
+  res.json(findPath(start, end, connectionsFile))
 })
 
 // takes input from query string and returns path with artist names, ids, and images
 app.get('/api/path/', (req, res) => {
   const start = (req.query.start || '').toLowerCase().trim()
   const end = (req.query.end || '').toLowerCase().trim()
-  res.json(findPath(start, end, connectionFile))
+  res.json(findPath(start, end, connectionsFile))
 })
 
 // returns an object with a random start and random end artist
 app.get('/api/random/', (req, res) => {
-  res.json(getRandomArtists(connectionFile))
+  res.json(getRandomArtists(connectionsFile))
+})
+
+// FIXME: remove this route, only for testing purposes
+app.get('/data/', (req, res) => {
+  res.sendFile(path.join(__dirname, `../${connectionsFile}`))
 })
 
 // serve static client files in production
