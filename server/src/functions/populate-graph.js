@@ -14,7 +14,10 @@ const populateGraph = (graph, map, connectionsFile) => {
     const [toName, toId, toImageUrl] = to.split('|')
 
     // removing '\r' character
-    const cleanedToImageUrl = toImageUrl.substring(0, toImageUrl.length - 1)
+    const cleanedToImageUrl =
+      toImageUrl[toImageUrl.length - 1] === '\r'
+        ? toImageUrl.substring(0, toImageUrl.length - 1)
+        : toImageUrl
 
     // artist names are stored in lowercase in graph
     graph.insert(fromName.toLowerCase(), toName.toLowerCase())
