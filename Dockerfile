@@ -25,4 +25,4 @@ COPY ./server/data ./data
 
 USER node
 EXPOSE 5000
-CMD ["npm", "run", "start:prod:unix"]
+CMD ["node", "src/server.js"]

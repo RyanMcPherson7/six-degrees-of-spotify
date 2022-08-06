@@ -13,7 +13,8 @@ const populateGraph = (graph, map, connectionsFile) => {
     const [fromName, fromId, fromImageUrl] = from.split('|')
     const [toName, toId, toImageUrl] = to.split('|')
 
-    // removing '\r' character
+    // remove '\r' character if present, we check because
+    // different OSs handle end of line (eol) differently
     const cleanedToImageUrl =
       toImageUrl[toImageUrl.length - 1] === '\r'
         ? toImageUrl.substring(0, toImageUrl.length - 1)
