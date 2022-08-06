@@ -10,12 +10,16 @@ const Interface = () => {
   const onSubmitForm = async () => {
     const start = document.querySelector('#start-artist-input').value
     const end = document.querySelector('#end-artist-input').value
+    console.log('fetching normal submit')
     const res = await getPath(start, end)
+    console.log('done normal submit')
     setArtistPath(res)
   }
 
   const onSubmitRandom = async () => {
+    console.log('fetching random submit')
     const res = await getRandomArtist()
+    console.log('done random submit')
     document.querySelector('#start-artist-input').value = res.start
     document.querySelector('#end-artist-input').value = res.end
     setArtistPath(res)
