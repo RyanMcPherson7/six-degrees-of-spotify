@@ -4,6 +4,8 @@
   --color-white: #fff;
   --color-black: #000000;
   --color-green: #1ed561;
+  --color-light-grey: #adadad;
+  --color-dark-grey: #5f5f5f;
 }
 
 * {
@@ -171,12 +173,14 @@ button::before {
 /* ================================ */
 /*           ARTIST PANEL           */
 /* ================================ */
-#artist-panel {
+.artist-panel {
   display: grid;
   grid-template-columns: 1fr 1fr;
   text-align: center;
   margin: 1rem auto;
   max-width: 600px;
+  justify-content: center;
+  align-items: center;
 }
 
 .artist-profile {
@@ -184,7 +188,7 @@ button::before {
   transition: transform 0.5s ease-in-out;
 }
 
-.artist-profile img {
+.artist-image {
   width: 8rem;
   height: 8rem;
   border-radius: 10rem;
@@ -192,13 +196,19 @@ button::before {
   transition: border-color 0.5s ease-in-out;
 }
 
-.artist-profile h4 {
+.artist-name {
   font-size: 1.1rem;
   margin-top: 0.4rem;
   color: var(--color-white);
 }
 
 .horizontal-double-arrow {
+  justify-items: center;
+  align-items: center;
+  margin: auto 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--color-white);
   display: none;
 }
 
@@ -211,6 +221,76 @@ button::before {
   text-align: center;
   margin: 1.5rem;
   line-height: 1.8rem;
+}
+
+/* ================================ */
+/*       Artist Panel Loading       */
+/* ================================ */
+.loading-artist-profile {
+  padding: 0.75rem 0;
+}
+
+.loading-artist-icon-wrapper {
+  background-color: var(--color-black);
+  width: 8rem;
+  height: 8rem;
+  border-radius: 10rem;
+  border: 0.45rem solid var(--color-white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  animation: skeleton-loading-icon 1s linear infinite alternate;
+  opacity: 0.7;
+}
+
+.loading-artist-icon {
+  width: 3rem;
+  height: 3rem;
+}
+
+@keyframes skeleton-loading-icon {
+  0% {
+    border-color: var(--color-light-grey);
+    color: var(--color-light-grey);
+  }
+  100% {
+    border-color: var(--color-dark-grey);
+    color: var(--color-dark-grey);
+  }
+}
+
+.loading-artist-name {
+  margin: 0.8rem auto 0;
+  font-size: 0.7rem;
+  width: 45%;
+  animation: skeleton-loading-bg 1s linear infinite alternate;
+  opacity: 0.7;
+  border-radius: 0.1rem;
+}
+
+@keyframes skeleton-loading-bg {
+  0% {
+    background-color: var(--color-light-grey);
+    color: var(--color-light-grey);
+  }
+  100% {
+    background-color: var(--color-dark-grey);
+    color: var(--color-dark-grey);
+  }
+}
+
+.loading-artist-arrow {
+  animation: skeleton-loading-color 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading-color {
+  0% {
+    color: var(--color-light-grey);
+  }
+  100% {
+    color: var(--color-dark-grey);
+  }
 }
 
 /* ================================ */
@@ -255,7 +335,7 @@ button::before {
     transform: scaleX(1);
   }
 
-  #artist-panel {
+  .artist-panel {
     grid-template-columns: 1fr 0.1fr 1fr 0.1fr;
   }
 
@@ -263,34 +343,34 @@ button::before {
     transform: scale(1.07);
   }
 
-  .artist-profile img:hover {
+  .artist-image:hover {
     border-color: var(--color-white);
   }
 
-  .artist-profile img {
+  .artist-image,
+  .loading-artist-icon-wrapper {
     width: 11rem;
     height: 11rem;
-    border: 0.6rem solid var(--color-green);
+    border-width: 0.6rem;
   }
 
-  .artist-profile h4 {
+  .artist-name {
     font-size: 1.4rem;
   }
 
   .horizontal-double-arrow {
     display: flex;
-    justify-items: center;
-    align-items: center;
-    margin: auto 0;
-    width: 2.5rem;
-    height: 2.5rem;
-    color: var(--color-white);
-    display: flex;
+  }
+
+  .loading-artist-name {
+    width: 55%;
+    font-size: 1rem;
+    margin-top: 1rem;
   }
 }
 
 @media (min-width: 900px) {
-  #artist-panel {
+  .artist-panel {
     grid-template-columns: 1fr 0.1fr 1fr 0.1fr 1fr 0.1fr;
     max-width: 800px;
   }
@@ -301,12 +381,13 @@ button::before {
 }
 
 @media (min-width: 1300px) {
-  #artist-panel {
+  .artist-panel {
     grid-template-columns: 1fr 0.1fr 1fr 0.1fr 1fr 0.1fr 1fr 0.1fr;
     max-width: 1200px;
   }
 
-  .artist-profile {
+  .artist-profile,
+  .loading-artist-profile {
     margin: 0.5rem 0;
   }
 }

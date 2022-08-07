@@ -2,24 +2,25 @@ import { useState } from 'react'
 import { FaLongArrowAltDown, FaRandom, FaTelegramPlane } from 'react-icons/fa'
 import getPath from '../api/get-path'
 import getRandomArtist from '../api/get-random-artists'
-import ArtistPanel from './ArtistPanel'
+import MainContentPanel from './MainContentPanel'
 
 const Interface = () => {
   const [artistPath, setArtistPath] = useState({ valid: true, path: [] })
+  const [isLoading, setIsLoading] = useState(false)
 
   const onSubmitForm = async () => {
     const start = document.querySelector('#start-artist-input').value
     const end = document.querySelector('#end-artist-input').value
-    console.log('fetching normal submit')
+    setIsLoading(true)
     const res = await getPath(start, end)
-    console.log('done normal submit')
+    setIsLoading(false)
     setArtistPath(res)
   }
 
   const onSubmitRandom = async () => {
-    console.log('fetching random submit')
+    setIsLoading(true)
     const res = await getRandomArtist()
-    console.log('done random submit')
+    setIsLoading(false)
     document.querySelector('#start-artist-input').value = res.start
     document.querySelector('#end-artist-input').value = res.end
     setArtistPath(res)
@@ -67,7 +68,7 @@ const Interface = () => {
           Random
         </button>
       </form>
-      <ArtistPanel pathApiRes={artistPath} />
+      <MainContentPanel pathApiRes={artistPath} isLoading={isLoading} />
     </>
   )
 }

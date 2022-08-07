@@ -14,7 +14,6 @@ app.use(express.json())
 app.post('/api/path/', (req, res) => {
   const start = (req.body.start || '').toLowerCase().trim()
   const end = (req.body.end || '').toLowerCase().trim()
-
   res.json(findPath(start, end, connectionsFile))
 })
 
