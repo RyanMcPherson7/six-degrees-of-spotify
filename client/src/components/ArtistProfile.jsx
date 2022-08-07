@@ -12,8 +12,8 @@ const ArtistProfile = ({ artistName, artistId, artistImage }) => {
       target="_blank"
       rel="noopener noreferrer"
     >
-      <img src={cleanedArtistImage} alt={artistName} />
-      <h4>{artistName}</h4>
+      <img src={cleanedArtistImage} alt={artistName} className="artist-image" />
+      <h4 className="artist-name">{artistName}</h4>
     </a>
   )
 }
