@@ -18,6 +18,8 @@ const Interface = () => {
   }
 
   const onSubmitRandom = async () => {
+    document.querySelector('#start-artist-input').value = '...'
+    document.querySelector('#end-artist-input').value = '...'
     setIsLoading(true)
     const res = await getRandomArtist()
     setIsLoading(false)
