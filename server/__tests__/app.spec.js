@@ -231,3 +231,29 @@ describe('GET /api/random/', () => {
     expect(res.body.valid).toEqual(true)
   })
 })
+
+describe('GET /api/artists/', () => {
+  it('should return a 200 response', async () => {
+    // Act
+    const res = await request(app).get('/api/artists/')
+
+    // Assert
+    expect(res.statusCode).toBe(200)
+  })
+
+  it('should return json data', async () => {
+    // Act
+    const res = await request(app).get('/api/artists/')
+
+    // Assert
+    expect(res.headers['content-type']).toEqual(expect.stringContaining('json'))
+  })
+
+  it('should return a list of artist names', async () => {
+    // Act
+    const res = await request(app).get('/api/artists/')
+
+    // Assert
+    expect(res.body.artistNameList).toBeTruthy()
+  })
+})
