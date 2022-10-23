@@ -254,6 +254,6 @@ describe('GET /api/artists/', () => {
     const res = await request(app).get('/api/artists/')
 
     // Assert
-    expect(res.body.artistNameList).toBeTruthy()
+    expect(res.body.artistNamesList).toBeTruthy()
   })
 })

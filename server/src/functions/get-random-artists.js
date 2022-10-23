@@ -1,9 +1,8 @@
-const fs = require('fs')
 const { findPath } = require('./find-path')
 const { getArtistNameList } = require('./get-artist-name-list')
 
 const getRandomArtists = (connectionsFile) => {
-  const artistList = getArtistNameList(connectionsFile).artistNameList
+  const artistList = getArtistNameList(connectionsFile).artistNamesList
 
   // getting 2 random artists from artist list
   const start = artistList[Math.floor(Math.random() * artistList.length)]

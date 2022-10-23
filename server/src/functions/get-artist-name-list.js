@@ -15,7 +15,7 @@ const getArtistNameList = (connectionsFile) => {
   })
 
   return {
-    artistNameList: Array.from(artistNameSet).sort(),
+    artistNamesList: Array.from(artistNameSet).sort(),
   }
 }
 
