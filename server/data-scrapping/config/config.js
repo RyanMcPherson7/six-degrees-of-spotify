@@ -172,6 +172,26 @@ const config = {
         'Dolly Parton|32vWCbZh0xZ4o9gkz4PsEU|https://i.scdn.co/image/ab6761610000e5eb20ee5dd7929b2eb0b8886cac',
       artistId: '32vWCbZh0xZ4o9gkz4PsEU',
     },
+    {
+      artistContentString:
+        'Hans Zimmer|0YC192cP3KPCRWx8zr8MfZ|https://i.scdn.co/image/ab6761610000e5eb371632043a8c12bb7eeeaf9d',
+      artistId: '0YC192cP3KPCRWx8zr8MfZ',
+    },
+    {
+      artistContentString:
+        'Beyoncé|6vWDO969PvNqNYHIOW5v0m|https://i.scdn.co/image/ab6761610000e5eb676338904deb80cffb568216',
+      artistId: '6vWDO969PvNqNYHIOW5v0m',
+    },
+    {
+      artistContentString:
+        'Rihanna|5pKCCKE2ajJHZ9KAiaK11H|https://i.scdn.co/image/ab6761610000e5eb019d6873a01987cbe35888cd',
+      artistId: '5pKCCKE2ajJHZ9KAiaK11H',
+    },
+    {
+      artistContentString:
+        'Daft Punk|4tZwfgrHOc3mvqYlEYSvVi|https://i.scdn.co/image/ab6761610000e5eb96d66c60658005885d1135ce',
+      artistId: '4tZwfgrHOc3mvqYlEYSvVi',
+    },
   ],
 }
 
