@@ -97,7 +97,7 @@ header h4 a {
 }
 
 #description-container {
-  max-width: 800px;
+  max-width: 850px;
   margin: 0 auto;
 }
 
@@ -155,6 +155,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 9rem;
 
   position: relative;
   z-index: 1;
@@ -329,6 +330,7 @@ button::before {
 
   button {
     font-size: 1.4rem;
+    width: 12.5rem;
     padding: 0.6rem 1.8rem;
   }
 

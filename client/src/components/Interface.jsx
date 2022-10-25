@@ -8,36 +8,62 @@ import getArtistNameList from '../api/get-artist-names-list'
 const Interface = () => {
   const [artistPath, setArtistPath] = useState({ valid: true, path: [] })
   const [isLoading, setIsLoading] = useState(false)
+  const [startName, setStartName] = useState('')
+  const [endName, setEndName] = useState('')
   const [artistNamesList, setArtistNamesList] = useState([])
-  const [startInput, setStartInput] = useState('')
-  const [endInput, setEndInput] = useState('')
+  const [autocompStartNames, setAutocompStartNames] = useState([])
+  const [autocompEndNames, setAutocompEndNames] = useState([])
 
   const fetchArtistNamesList = async () => {
     const res = await getArtistNameList()
     setArtistNamesList(res.artistNamesList)
   }
 
-  const onSubmitForm = async () => {
+  const onSubmitPath = async () => {
     setIsLoading(true)
-    const res = await getPath(startInput, endInput)
+    const res = await getPath(startName, endName)
     setIsLoading(false)
     setArtistPath(res)
   }
 
   const onSubmitRandom = async () => {
-    setStartInput('...')
-    setEndInput('...')
+    setStartName('...')
+    setEndName('...')
     setIsLoading(true)
     const res = await getRandomArtist()
     setIsLoading(false)
-    setStartInput(res.start)
-    setEndInput(res.end)
+    setStartName(res.start)
+    setEndName(res.end)
     setArtistPath(res)
   }
 
+  // fetch all artist names on initial render
   useEffect(() => {
     fetchArtistNamesList()
   }, [])
+
+  // grab limited number of names that match input string
+  // to render inside datalist to reduce number of
+  // (useless) elements in DOM for autocomplete
+  useEffect(() => {
+    if (startName.length < 3) return
+
+    setAutocompStartNames(
+      artistNamesList.filter((name) =>
+        name.toLowerCase().includes(startName.toLowerCase())
+      )
+    )
+  }, [startName])
+
+  useEffect(() => {
+    if (endName.length < 3) return
+
+    setAutocompEndNames(
+      artistNamesList.filter((name) =>
+        name.toLowerCase().includes(endName.toLowerCase())
+      )
+    )
+  }, [endName])
 
   return (
     <>
@@ -47,13 +73,16 @@ const Interface = () => {
           type="text"
           placeholder="Enter Start Artist"
           list="start-input-options"
-          value={startInput}
-          onChange={(e) => setStartInput(e.target.value)}
+          value={startName}
+          onChange={(e) => setStartName(e.target.value)}
         />
         <datalist id="start-input-options">
-          {artistNamesList.map((name) => (
-            <option value={name}>{name}</option>
-          ))}
+          {startName.length >= 3 &&
+            autocompStartNames.map((name) => (
+              <option value={name} key={name}>
+                {name}
+              </option>
+            ))}
         </datalist>
 
         <FaLongArrowAltDown
@@ -70,19 +99,22 @@ const Interface = () => {
           type="text"
           placeholder="Enter End Artist"
           list="end-input-options"
-          value={endInput}
-          onChange={(e) => setEndInput(e.target.value)}
+          value={endName}
+          onChange={(e) => setEndName(e.target.value)}
         />
         <datalist id="end-input-options">
-          {artistNamesList.map((name) => (
-            <option value={name}>{name}</option>
-          ))}
+          {endName.length >= 3 &&
+            autocompEndNames.map((name) => (
+              <option value={name} key={name}>
+                {name}
+              </option>
+            ))}
         </datalist>
 
         <button
           onClick={(e) => {
             e.preventDefault()
-            onSubmitForm()
+            onSubmitPath()
           }}
           type="submit"
         >
