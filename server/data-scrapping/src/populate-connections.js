@@ -1,7 +1,45 @@
 /* eslint no-console: 0 */
 const fs = require('fs')
-const { getBearerToken, getRelatedArtists } = require('./spotify-api')
+const {
+  getBearerToken,
+  getArtist,
+  getRelatedArtists,
+} = require('./spotify-api')
 const { Queue } = require('../../src/classes/queue')
+
+/*
+ * blocks thread of execution for specified number of seconds
+ *
+ * NOTE: this is only used to avoid getting rate limited by
+ * Spotify's API when building the flat file DB
+ */
+function delay(seconds) {
+  return new Promise((resolve) => setTimeout(resolve, seconds * 1000))
+}
+
+/*
+ * builds the content string + id object for each seeding
+ * artist for the processing queue
+ */
+const buildSeedingArtists = async (idList, bearerToken) => {
+  const res = await Promise.all(
+    idList.map(async (id) => {
+      const artistInfo = await getArtist(id, bearerToken)
+      const contentString = `${artistInfo.name}|${artistInfo.id}|${
+        artistInfo.images.length > 0
+          ? artistInfo.images[0].url
+          : 'IMAGE NOT AVAILABLE'
+      }`
+
+      return {
+        artistContentString: contentString,
+        artistId: id,
+      }
+    })
+  )
+
+  return res
+}
 
 /*
  * writes artist connection to connections file
@@ -17,14 +55,19 @@ const populateConnections = async (
   const artistIdSet = new Set()
   const bearerToken = await getBearerToken()
   let numConnect = 0
+  let lastStopTime = Date.now()
+  const seedingArtists = await buildSeedingArtists(
+    seedingArtistList,
+    bearerToken
+  )
 
   // loading data into queue from source
   const processingQueue = new Queue()
-  seedingArtistList.forEach((artist) => {
+  seedingArtists.forEach((artist) => {
     processingQueue.enqueue(artist)
   })
 
-  // processing artists
+  // building flat-file DB of artist connections
   while (!processingQueue.empty()) {
     // processing each id in processing queue
     const qSize = processingQueue.size()
@@ -40,11 +83,8 @@ const populateConnections = async (
 
       const res = await getRelatedArtists(fromArtistId, bearerToken)
       const relatedArtistList = res.artists
-
-      // adding artist to computed set
       artistIdSet.add(fromArtistId)
 
-      // reviewing each related artist
       relatedArtistList.forEach((toArtist) => {
         // only process artist if popular enough
         if (toArtist.popularity < popularityThreshold) {
@@ -74,6 +114,14 @@ const populateConnections = async (
       })
 
       console.log('Artists:', artistIdSet.size, '& Connections:', numConnect)
+
+      // pause execution for 5 seconds every 15 seconds
+      // to avoid rate limiting by Spotify API
+      if (Date.now() - lastStopTime > 15000) {
+        console.log('taking a short break :)')
+        await delay(5)
+        lastStopTime = Date.now()
+      }
     }
   }
 
@@ -84,28 +132,12 @@ const populateConnections = async (
 }
 
 /*
- * converts already processed artist ids contained withing artistIdSetFile
- * and converts them to a set
+ * deletes all contents inside a file
  */
-const populateArtistIdSet = (artistIdSetFile) => {
-  const artistIdSet = new Set()
-  fs.readFile(artistIdSetFile, 'utf8', (err, data) => {
-    if (err) throw err
-
-    const artistIdList = data.split(',')
-    artistIdList.forEach((id) => {
-      artistIdSet.add(id)
-    })
-  })
-
-  return artistIdSet
-}
-
-// deletes all contents inside a file
 const resetFile = (fileName) => {
   fs.writeFileSync(fileName, '', (err) => {
     if (err) throw err
   })
 }
 
-module.exports = { populateConnections, populateArtistIdSet, resetFile }
+module.exports = { populateConnections, resetFile }
