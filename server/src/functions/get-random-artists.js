@@ -1,19 +1,8 @@
-const fs = require('fs')
 const { findPath } = require('./find-path')
+const { getArtistNameList } = require('./get-artist-name-list')
 
 const getRandomArtists = (connectionsFile) => {
-  const artistList = []
-  const artistData = fs.readFileSync(connectionsFile, { encoding: 'utf8' })
-  const artistContentStringList = artistData.split('\n')
-
-  // remove empty line at end of connection file
-  artistContentStringList.pop()
-
-  // populating artist list
-  artistContentStringList.forEach((connection) => {
-    const [artistName] = connection.split('|')
-    artistList.push(artistName)
-  })
+  const artistList = getArtistNameList(connectionsFile).artistNamesList
 
   // getting 2 random artists from artist list
   const start = artistList[Math.floor(Math.random() * artistList.length)]

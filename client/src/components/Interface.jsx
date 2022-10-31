@@ -1,32 +1,69 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { FaLongArrowAltDown, FaRandom, FaTelegramPlane } from 'react-icons/fa'
 import getPath from '../api/get-path'
 import getRandomArtist from '../api/get-random-artists'
 import MainContentPanel from './MainContentPanel'
+import getArtistNameList from '../api/get-artist-names-list'
 
 const Interface = () => {
   const [artistPath, setArtistPath] = useState({ valid: true, path: [] })
   const [isLoading, setIsLoading] = useState(false)
+  const [startName, setStartName] = useState('')
+  const [endName, setEndName] = useState('')
+  const [artistNamesList, setArtistNamesList] = useState([])
+  const [autocompStartNames, setAutocompStartNames] = useState([])
+  const [autocompEndNames, setAutocompEndNames] = useState([])
 
-  const onSubmitForm = async () => {
-    const start = document.querySelector('#start-artist-input').value
-    const end = document.querySelector('#end-artist-input').value
+  const fetchArtistNamesList = async () => {
+    const res = await getArtistNameList()
+    setArtistNamesList(res.artistNamesList)
+  }
+
+  const onSubmitPath = async () => {
     setIsLoading(true)
-    const res = await getPath(start, end)
+    const res = await getPath(startName, endName)
     setIsLoading(false)
     setArtistPath(res)
   }
 
   const onSubmitRandom = async () => {
-    document.querySelector('#start-artist-input').value = '...'
-    document.querySelector('#end-artist-input').value = '...'
+    setStartName('...')
+    setEndName('...')
     setIsLoading(true)
     const res = await getRandomArtist()
     setIsLoading(false)
-    document.querySelector('#start-artist-input').value = res.start
-    document.querySelector('#end-artist-input').value = res.end
+    setStartName(res.start)
+    setEndName(res.end)
     setArtistPath(res)
   }
+
+  // fetch all artist names on initial render
+  useEffect(() => {
+    fetchArtistNamesList()
+  }, [])
+
+  // grab limited number of names that match input string
+  // to render inside datalist to reduce number of
+  // (useless) elements in DOM for autocomplete
+  useEffect(() => {
+    if (startName.length < 3) return
+
+    setAutocompStartNames(
+      artistNamesList.filter((name) =>
+        name.toLowerCase().includes(startName.toLowerCase())
+      )
+    )
+  }, [startName])
+
+  useEffect(() => {
+    if (endName.length < 3) return
+
+    setAutocompEndNames(
+      artistNamesList.filter((name) =>
+        name.toLowerCase().includes(endName.toLowerCase())
+      )
+    )
+  }, [endName])
 
   return (
     <>
@@ -35,7 +72,19 @@ const Interface = () => {
           id="start-artist-input"
           type="text"
           placeholder="Enter Start Artist"
+          list="start-input-options"
+          value={startName}
+          onChange={(e) => setStartName(e.target.value)}
         />
+        <datalist id="start-input-options">
+          {startName.length >= 3 &&
+            autocompStartNames.map((name) => (
+              <option value={name} key={name}>
+                {name}
+              </option>
+            ))}
+        </datalist>
+
         <FaLongArrowAltDown
           style={{
             width: '2rem',
@@ -44,20 +93,33 @@ const Interface = () => {
             margin: '0.2rem 0',
           }}
         />
+
         <input
           id="end-artist-input"
           type="text"
           placeholder="Enter End Artist"
+          list="end-input-options"
+          value={endName}
+          onChange={(e) => setEndName(e.target.value)}
         />
+        <datalist id="end-input-options">
+          {endName.length >= 3 &&
+            autocompEndNames.map((name) => (
+              <option value={name} key={name}>
+                {name}
+              </option>
+            ))}
+        </datalist>
+
         <button
           onClick={(e) => {
             e.preventDefault()
-            onSubmitForm()
+            onSubmitPath()
           }}
           type="submit"
         >
           <FaTelegramPlane style={{ marginRight: '0.2rem' }} />
-          Let's Go!
+          Find Path
         </button>
         <button
           onClick={(e) => {

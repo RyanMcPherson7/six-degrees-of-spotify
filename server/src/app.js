@@ -3,6 +3,7 @@ const cors = require('cors')
 const path = require('path')
 const { findPath } = require('./functions/find-path')
 const { getRandomArtists } = require('./functions/get-random-artists')
+const { getArtistNameList } = require('./functions/get-artist-name-list')
 
 const app = express()
 const connectionsFile = './data/connections-50.txt'
@@ -27,6 +28,10 @@ app.get('/api/path/', (req, res) => {
 // returns an object with a random start and random end artist
 app.get('/api/random/', (req, res) => {
   res.json(getRandomArtists(connectionsFile))
+})
+
+app.get('/api/artists/', (req, res) => {
+  res.json(getArtistNameList(connectionsFile))
 })
 
 // serve static client files in production
