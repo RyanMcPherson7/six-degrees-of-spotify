@@ -155,7 +155,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 9rem;
+  width: 10rem;
 
   position: relative;
   z-index: 1;
