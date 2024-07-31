@@ -2,11 +2,11 @@ const popularityThreshold = 50
 
 const connectionsFile = `../data/connections-${popularityThreshold}.txt`
 
-const queueFile = ''
+const idSetCacheFile = `../data/id-set-cache-${popularityThreshold}.txt`
 
-const stackFile = ''
+const processingQueueCacheFile = `../data/processing-queue-cache-${popularityThreshold}.txt`
 
-const dailyRequestLimit = 9950
+const dailyRequestLimit = 9500
 
 const seedingArtistList = [
   '6eUKZXaKkcviH0Ku9w2n3V', // Ed Sheeran
@@ -52,8 +52,8 @@ const seedingArtistList = [
 module.exports = {
   popularityThreshold,
   connectionsFile,
-  queueFile,
-  stackFile,
+  idSetCacheFile,
+  processingQueueCacheFile,
   dailyRequestLimit,
   seedingArtistList,
 }
