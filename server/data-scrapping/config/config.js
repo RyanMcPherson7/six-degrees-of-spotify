@@ -6,7 +6,7 @@ const idSetCacheFile = `../data/id-set-cache-${popularityThreshold}.txt`
 
 const processingQueueCacheFile = `../data/processing-queue-cache-${popularityThreshold}.txt`
 
-const dailyRequestLimit = 9750
+const dailyRequestLimit = 7000
 
 const seedingArtistList = [
   '6eUKZXaKkcviH0Ku9w2n3V', // Ed Sheeran

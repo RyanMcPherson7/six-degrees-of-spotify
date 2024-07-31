@@ -33,7 +33,7 @@ const resetFile = (fileName) => {
  * @param {string} idSetCacheFile
  */
 const writeIdSetCache = (idSet, idSetCacheFile) => {
-  console.log('Saving state of artist id set in ', idSetCacheFile)
+  console.log('Saving state of artist id set in', idSetCacheFile)
 
   resetFile(idSetCacheFile)
 
@@ -47,7 +47,7 @@ const writeIdSetCache = (idSet, idSetCacheFile) => {
  * @returns {Set} of artists IDs already processed in past attempt to build DB
  */
 const readIdSetCache = (idSetCacheFile) => {
-  console.log('Reading cached state of artist id set from ', idSetCacheFile)
+  console.log('Reading cached state of artist id set from', idSetCacheFile)
 
   const fileData = fs.readFileSync(idSetCacheFile, { encoding: 'utf8' })
   const set = new Set(fileData.split(','))
@@ -66,7 +66,7 @@ const writeProcessingQueueCache = (
   processingQueue,
   processingQueueCacheFile,
 ) => {
-  console.log('Saving state of processing queue in ', processingQueueCacheFile)
+  console.log('Saving state of processing queue in', processingQueueCacheFile)
 
   resetFile(processingQueueCacheFile)
 
@@ -89,7 +89,7 @@ const writeProcessingQueueCache = (
  */
 const readProcessingQueueCache = (processingQueueCacheFile) => {
   console.log(
-    'Reading cached state of processing queue from ',
+    'Reading cached state of processing queue from',
     processingQueueCacheFile,
   )
 
@@ -175,8 +175,9 @@ const populateConnections = async (
   const processingQueue = readProcessingQueueCache(processingQueueCacheFile)
   let numRequestsSent = 0
   let numSessionConnections = 0
+  let lastStopTime = Date.now()
 
-  console.log('Processed ', artistIdSet.size, ' lass session.\n')
+  console.log('Processed', artistIdSet.size, 'last session.\n')
 
   // load seeding artists
   if (artistIdSet.size < seedingArtistList.length) {
@@ -251,15 +252,25 @@ const populateConnections = async (
         logProcessTime(startTime, Date.now())
         return
       }
+
+      // pause execution for 5 seconds every 20 seconds
+      // to avoid rate limiting by Spotify API
+      if (Date.now() - lastStopTime > 20000) {
+        console.log('taking a short break :)')
+        await delay(5)
+        writeIdSetCache(artistIdSet, idSetCacheFile)
+        writeProcessingQueueCache(processingQueue, processingQueueCacheFile)
+        lastStopTime = Date.now()
+      }
     }
   }
 
   console.log(
-    '\nConnected all artists within the ',
+    '\nConnected all artists within the',
     popularityThreshold,
-    ' popularity threshold',
+    'popularity threshold',
   )
-  console.log('Total artists found: ', artistIdSet.size)
+  console.log('Total artists found:', artistIdSet.size)
   logProcessTime(startTime, Date.now())
 }
 
