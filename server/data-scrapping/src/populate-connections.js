@@ -7,19 +7,18 @@ const {
 } = require('./spotify-api')
 const { Queue } = require('../../src/classes/queue')
 
-/*
- * blocks thread of execution for specified number of seconds
- *
- * NOTE: this is only used to avoid getting rate limited by
- * Spotify's API when building the flat file DB
+/**
+ * @param {number} seconds
+ * @returns timeout promise we can await to block thread of execution
  */
 function delay(seconds) {
   return new Promise((resolve) => setTimeout(resolve, seconds * 1000))
 }
 
-/*
- * builds the content string + id object for each seeding
- * artist for the processing queue
+/**
+ * @param {string[]} idList 
+ * @param {string} bearerToken 
+ * @returns list of seeding artist content strings and ids for processing queue
  */
 const buildSeedingArtists = async (idList, bearerToken) => {
   const res = await Promise.all(
@@ -35,21 +34,31 @@ const buildSeedingArtists = async (idList, bearerToken) => {
         artistContentString: contentString,
         artistId: id,
       }
-    })
+    }),
   )
 
   return res
 }
 
-/*
- * writes artist connection to connections file
+/**
+ * writes artist connections to connections file
  * seedingArtistList is a list of { artistContentString: string, artistId: string }
  * processingQueue is a queue of { artistContentString: string, artistId: string }
+ * 
+ * @param {number} popularityThreshold 
+ * @param {string} connectionsFile 
+ * @param {string} queueFile 
+ * @param {string} stackFile 
+ * @param {number} dailyRequestLimit 
+ * @param {string} seedingArtistList 
  */
 const populateConnections = async (
-  seedingArtistList,
+  popularityThreshold,
   connectionsFile,
-  popularityThreshold
+  queueFile,
+  stackFile,
+  dailyRequestLimit,
+  seedingArtistList,
 ) => {
   const startTime = Date.now()
   const artistIdSet = new Set()
@@ -58,7 +67,7 @@ const populateConnections = async (
   let lastStopTime = Date.now()
   const seedingArtists = await buildSeedingArtists(
     seedingArtistList,
-    bearerToken
+    bearerToken,
   )
 
   // loading data into queue from source
@@ -107,7 +116,7 @@ const populateConnections = async (
           `${fromArtistContentString} -> ${toArtistContentString}\n`,
           (err) => {
             if (err) throw err
-          }
+          },
         )
 
         numConnect++

@@ -1,7 +1,9 @@
 const axios = require('axios')
 require('dotenv').config()
 
-// returns bearer token from Spotify
+/**
+ * @returns bearer token from Spotify
+ */
 const getBearerToken = async () => {
   const res = await axios({
     method: 'post',
@@ -18,7 +20,11 @@ const getBearerToken = async () => {
   return res.data.access_token
 }
 
-// returns related artists list for specified artistId
+/**
+ * @param {string} artistId
+ * @param {string} bearerToken
+ * @returns artist data for specified artistId
+ */
 const getArtist = async (artistId, bearerToken) => {
   const token = bearerToken
 
@@ -33,7 +39,11 @@ const getArtist = async (artistId, bearerToken) => {
   return res.data
 }
 
-// returns related artists list for specified artistId
+/**
+ * @param {string} artistId
+ * @param {string} bearerToken
+ * @returns related artists list for specified artistId
+ */
 const getRelatedArtists = async (artistId, bearerToken) => {
   const token = bearerToken
 
