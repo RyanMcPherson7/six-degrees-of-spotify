@@ -10,6 +10,8 @@ const {
 
 if (process.env.REBUILD) {
   resetFile(connectionsFile)
+  resetFile(idSetCacheFile)
+  resetFile(processingQueueCacheFile)
 }
 
 populateConnections(
