@@ -69,9 +69,10 @@ const writeProcessingQueueCache = (
   console.log('Saving state of processing queue in', processingQueueCacheFile)
 
   resetFile(processingQueueCacheFile)
+  const cloneQueue = processingQueue.clone()
 
-  while (!processingQueue.empty()) {
-    const artist = processingQueue.dequeue()
+  while (!cloneQueue.empty()) {
+    const artist = cloneQueue.dequeue()
 
     fs.appendFile(
       processingQueueCacheFile,
@@ -257,9 +258,9 @@ const populateConnections = async (
       // to avoid rate limiting by Spotify API
       if (Date.now() - lastStopTime > 20000) {
         console.log('taking a short break :)')
-        await delay(5)
         writeIdSetCache(artistIdSet, idSetCacheFile)
         writeProcessingQueueCache(processingQueue, processingQueueCacheFile)
+        await delay(5)
         lastStopTime = Date.now()
       }
     }

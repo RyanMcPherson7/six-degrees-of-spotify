@@ -1,6 +1,6 @@
 const Queue = class {
-  constructor() {
-    this.store = []
+  constructor(store = []) {
+    this.store = store
   }
 
   enqueue(elem) {
@@ -29,6 +29,10 @@ const Queue = class {
 
   size() {
     return this.store.length
+  }
+
+  clone() {
+    return new Queue([...this.store])
   }
 }
 
