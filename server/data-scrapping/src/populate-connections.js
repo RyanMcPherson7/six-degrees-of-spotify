@@ -74,7 +74,7 @@ const writeProcessingQueueCache = (
   while (!cloneQueue.empty()) {
     const artist = cloneQueue.dequeue()
 
-    fs.appendFile(
+    fs.appendFileSync(
       processingQueueCacheFile,
       `${artist.artistContentString} === ${artist.artistId}\n`,
       (err) => {
@@ -207,6 +207,12 @@ const populateConnections = async (
       }
 
       const res = await getRelatedArtists(fromArtistId, bearerToken)
+
+      // request failed, exit function immediately
+      if (!res) {
+        return
+      }
+
       artistIdSet.add(fromArtistId)
       numRequestsSent++
 
@@ -254,9 +260,9 @@ const populateConnections = async (
         return
       }
 
-      // pause execution for 5 seconds every 20 seconds
+      // pause execution for 5 seconds every 15 seconds
       // to avoid rate limiting by Spotify API
-      if (Date.now() - lastStopTime > 20000) {
+      if (Date.now() - lastStopTime > 15000) {
         console.log('taking a short break :)')
         writeIdSetCache(artistIdSet, idSetCacheFile)
         writeProcessingQueueCache(processingQueue, processingQueueCacheFile)
