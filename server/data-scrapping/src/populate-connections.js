@@ -178,7 +178,7 @@ const populateConnections = async (
   let numSessionConnections = 0
   let lastStopTime = Date.now()
 
-  console.log('Processed', artistIdSet.size, 'last session.\n')
+  console.log(artistIdSet.size, 'artists already processed.\n')
 
   // load seeding artists
   if (artistIdSet.size < seedingArtistList.length) {
@@ -208,8 +208,12 @@ const populateConnections = async (
 
       const res = await getRelatedArtists(fromArtistId, bearerToken)
 
-      // request failed, exit function immediately
+      // request failed, terminate process and save state
       if (!res) {
+        console.log()
+        writeIdSetCache(artistIdSet, idSetCacheFile)
+        writeProcessingQueueCache(processingQueue, processingQueueCacheFile)
+        logProcessTime(startTime, Date.now())
         return
       }
 
@@ -264,8 +268,6 @@ const populateConnections = async (
       // to avoid rate limiting by Spotify API
       if (Date.now() - lastStopTime > 15000) {
         console.log('taking a short break :)')
-        writeIdSetCache(artistIdSet, idSetCacheFile)
-        writeProcessingQueueCache(processingQueue, processingQueueCacheFile)
         await delay(5)
         lastStopTime = Date.now()
       }
