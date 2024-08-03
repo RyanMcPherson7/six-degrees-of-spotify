@@ -5,6 +5,8 @@ const {
   idSetCacheFile,
   processingQueueCacheFile,
   dailyRequestLimit,
+  pauseAfterSeconds,
+  pauseForSeconds,
   seedingArtistList,
 } = require('./config/config')
 
@@ -20,5 +22,7 @@ populateConnections(
   idSetCacheFile,
   processingQueueCacheFile,
   dailyRequestLimit,
+  pauseAfterSeconds,
+  pauseForSeconds,
   seedingArtistList
 )

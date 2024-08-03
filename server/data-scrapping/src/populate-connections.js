@@ -159,6 +159,8 @@ const logProcessTime = (startTime, endTime) => {
  * @param {string} idSetCacheFile
  * @param {string} processingQueueCacheFile
  * @param {number} dailyRequestLimit
+ * @param {number} pauseAfterSeconds
+ * @param {number} pauseForSeconds
  * @param {string} seedingArtistList
  */
 const populateConnections = async (
@@ -167,6 +169,8 @@ const populateConnections = async (
   idSetCacheFile,
   processingQueueCacheFile,
   dailyRequestLimit,
+  pauseAfterSeconds,
+  pauseForSeconds,
   seedingArtistList,
 ) => {
   const startTime = Date.now()
@@ -266,9 +270,9 @@ const populateConnections = async (
 
       // pause execution for 5 seconds every 15 seconds
       // to avoid rate limiting by Spotify API
-      if (Date.now() - lastStopTime > 15000) {
+      if (Date.now() - lastStopTime > pauseAfterSeconds * 1000) {
         console.log('taking a short break :)')
-        await delay(5)
+        await delay(pauseForSeconds)
         lastStopTime = Date.now()
       }
     }
