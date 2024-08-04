@@ -7,19 +7,115 @@ const {
 } = require('./spotify-api')
 const { Queue } = require('../../src/classes/queue')
 
-/*
- * blocks thread of execution for specified number of seconds
- *
- * NOTE: this is only used to avoid getting rate limited by
- * Spotify's API when building the flat file DB
+/**
+ * @param {number} seconds
+ * @returns timeout promise we can await to block thread of execution
  */
 function delay(seconds) {
   return new Promise((resolve) => setTimeout(resolve, seconds * 1000))
 }
 
-/*
- * builds the content string + id object for each seeding
- * artist for the processing queue
+/**
+ * deletes all contents inside a file
+ *
+ * @param {string} fileName
+ */
+const resetFile = (fileName) => {
+  fs.writeFileSync(fileName, '', (err) => {
+    if (err) throw err
+  })
+}
+
+/**
+ * writes idSet's current state to idSetCacheFile
+ *
+ * @param {Set} idSet
+ * @param {string} idSetCacheFile
+ */
+const writeIdSetCache = (idSet, idSetCacheFile) => {
+  console.log('Saving state of artist id set in', idSetCacheFile)
+
+  resetFile(idSetCacheFile)
+
+  fs.appendFile(idSetCacheFile, [...idSet].join(','), (err) => {
+    if (err) throw err
+  })
+}
+
+/**
+ * @param {string} idSetCacheFile
+ * @returns {Set} of artists IDs already processed in past attempt to build DB
+ */
+const readIdSetCache = (idSetCacheFile) => {
+  console.log('Reading cached state of artist id set from', idSetCacheFile)
+
+  const fileData = fs.readFileSync(idSetCacheFile, { encoding: 'utf8' })
+  const set = new Set(fileData.split(','))
+  set.delete('')
+
+  return set
+}
+
+/**
+ * writes processingQueue's current state to processingQueueCacheFile
+ *
+ * @param {Queue} processingQueue
+ * @param {string} processingQueueCacheFile
+ */
+const writeProcessingQueueCache = (
+  processingQueue,
+  processingQueueCacheFile,
+) => {
+  console.log('Saving state of processing queue in', processingQueueCacheFile)
+
+  resetFile(processingQueueCacheFile)
+  const cloneQueue = processingQueue.clone()
+
+  while (!cloneQueue.empty()) {
+    const artist = cloneQueue.dequeue()
+
+    fs.appendFileSync(
+      processingQueueCacheFile,
+      `${artist.artistContentString} === ${artist.artistId}\n`,
+      (err) => {
+        if (err) throw err
+      },
+    )
+  }
+}
+
+/**
+ * @param {string} processingQueueCacheFile
+ * @return {Queue} of artists who were queued to be processed in past attempt to build DB
+ */
+const readProcessingQueueCache = (processingQueueCacheFile) => {
+  console.log(
+    'Reading cached state of processing queue from',
+    processingQueueCacheFile,
+  )
+
+  const fileData = fs.readFileSync(processingQueueCacheFile, {
+    encoding: 'utf8',
+  })
+  const parsedFileData = fileData.split('\n')
+  parsedFileData.pop()
+  const queue = new Queue()
+
+  parsedFileData.forEach((artist) => {
+    const [artistContentString, artistId] = artist.split(' === ')
+    queue.enqueue({
+      artistContentString,
+      artistId,
+    })
+  })
+
+  return queue
+}
+
+/**
+ * @param {string[]} idList
+ * @param {string} bearerToken
+ * @returns list of seeding artist content strings and ids for processing queue
  */
 const buildSeedingArtists = async (idList, bearerToken) => {
   const res = await Promise.all(
@@ -35,37 +131,70 @@ const buildSeedingArtists = async (idList, bearerToken) => {
         artistContentString: contentString,
         artistId: id,
       }
-    })
+    }),
   )
 
   return res
 }
 
-/*
- * writes artist connection to connections file
+/**
+ * logs time difference between start and end time
+ *
+ * @param {string} startTime
+ * @param {string} endTime
+ */
+const logProcessTime = (startTime, endTime) => {
+  const numMinutes = Math.floor((endTime - startTime) / 1000 / 60)
+  const numSeconds = Math.floor((endTime - startTime) / 1000) % 60
+  console.log('\nProcess took', numMinutes, 'minutes &', numSeconds, 'seconds')
+}
+
+/**
+ * writes artist connections to connections file
  * seedingArtistList is a list of { artistContentString: string, artistId: string }
  * processingQueue is a queue of { artistContentString: string, artistId: string }
+ *
+ * @param {number} popularityThreshold
+ * @param {string} connectionsFile
+ * @param {string} idSetCacheFile
+ * @param {string} processingQueueCacheFile
+ * @param {number} dailyRequestLimit
+ * @param {number} pauseAfterSeconds
+ * @param {number} pauseForSeconds
+ * @param {string} seedingArtistList
  */
 const populateConnections = async (
-  seedingArtistList,
+  popularityThreshold,
   connectionsFile,
-  popularityThreshold
+  idSetCacheFile,
+  processingQueueCacheFile,
+  dailyRequestLimit,
+  pauseAfterSeconds,
+  pauseForSeconds,
+  seedingArtistList,
 ) => {
   const startTime = Date.now()
-  const artistIdSet = new Set()
   const bearerToken = await getBearerToken()
-  let numConnect = 0
-  let lastStopTime = Date.now()
-  const seedingArtists = await buildSeedingArtists(
-    seedingArtistList,
-    bearerToken
-  )
 
-  // loading data into queue from source
-  const processingQueue = new Queue()
-  seedingArtists.forEach((artist) => {
-    processingQueue.enqueue(artist)
-  })
+  const artistIdSet = readIdSetCache(idSetCacheFile)
+  const processingQueue = readProcessingQueueCache(processingQueueCacheFile)
+  let numRequestsSent = 0
+  let numSessionConnections = 0
+  let lastStopTime = Date.now()
+
+  console.log(artistIdSet.size, 'artists already processed.\n')
+
+  // load seeding artists
+  if (artistIdSet.size < seedingArtistList.length) {
+    const seedingArtists = await buildSeedingArtists(
+      seedingArtistList,
+      bearerToken,
+    )
+
+    seedingArtists.forEach((artist) => {
+      processingQueue.enqueue(artist)
+    })
+  }
 
   // building flat-file DB of artist connections
   while (!processingQueue.empty()) {
@@ -76,16 +205,26 @@ const populateConnections = async (
       const fromArtistContentString = fromArtist.artistContentString
       const fromArtistId = fromArtist.artistId
 
-      // don't process artist if already processed
+      // skip already processed artist
       if (artistIdSet.has(fromArtistId)) {
         continue
       }
 
       const res = await getRelatedArtists(fromArtistId, bearerToken)
-      const relatedArtistList = res.artists
-      artistIdSet.add(fromArtistId)
 
-      relatedArtistList.forEach((toArtist) => {
+      // request failed, terminate process and save state
+      if (!res) {
+        console.log()
+        writeIdSetCache(artistIdSet, idSetCacheFile)
+        writeProcessingQueueCache(processingQueue, processingQueueCacheFile)
+        logProcessTime(startTime, Date.now())
+        return
+      }
+
+      artistIdSet.add(fromArtistId)
+      numRequestsSent++
+
+      res.artists.forEach((toArtist) => {
         // only process artist if popular enough
         if (toArtist.popularity < popularityThreshold) {
           return
@@ -107,37 +246,45 @@ const populateConnections = async (
           `${fromArtistContentString} -> ${toArtistContentString}\n`,
           (err) => {
             if (err) throw err
-          }
+          },
         )
 
-        numConnect++
+        numSessionConnections++
       })
 
-      console.log('Artists:', artistIdSet.size, '& Connections:', numConnect)
+      console.log(
+        'Total Artists Processed:',
+        artistIdSet.size,
+        '& Connections Found in this Session:',
+        numSessionConnections,
+      )
+
+      // request limit reached
+      if (numRequestsSent >= dailyRequestLimit) {
+        console.log('\nDaily Spotify API request limit reached')
+        writeIdSetCache(artistIdSet, idSetCacheFile)
+        writeProcessingQueueCache(processingQueue, processingQueueCacheFile)
+        logProcessTime(startTime, Date.now())
+        return
+      }
 
       // pause execution for 5 seconds every 15 seconds
       // to avoid rate limiting by Spotify API
-      if (Date.now() - lastStopTime > 15000) {
+      if (Date.now() - lastStopTime > pauseAfterSeconds * 1000) {
         console.log('taking a short break :)')
-        await delay(5)
+        await delay(pauseForSeconds)
         lastStopTime = Date.now()
       }
     }
   }
 
-  const endTime = Date.now()
-  const numMinutes = Math.floor((endTime - startTime) / 1000 / 60)
-  const numSeconds = Math.floor((endTime - startTime) / 1000) % 60
-  console.log('Process took', numMinutes, 'minutes &', numSeconds, 'seconds')
-}
-
-/*
- * deletes all contents inside a file
- */
-const resetFile = (fileName) => {
-  fs.writeFileSync(fileName, '', (err) => {
-    if (err) throw err
-  })
+  console.log(
+    '\nConnected all artists within the',
+    popularityThreshold,
+    'popularity threshold',
+  )
+  console.log('Total artists found:', artistIdSet.size)
+  logProcessTime(startTime, Date.now())
 }
 
 module.exports = { populateConnections, resetFile }

@@ -1,12 +1,28 @@
 const { populateConnections, resetFile } = require('./src/populate-connections')
-const config = require('./config/config')
+const {
+  popularityThreshold,
+  connectionsFile,
+  idSetCacheFile,
+  processingQueueCacheFile,
+  dailyRequestLimit,
+  pauseAfterSeconds,
+  pauseForSeconds,
+  seedingArtistList,
+} = require('./config/config')
 
 if (process.env.REBUILD) {
-  resetFile(config.connectionsFile)
+  resetFile(connectionsFile)
+  resetFile(idSetCacheFile)
+  resetFile(processingQueueCacheFile)
 }
 
 populateConnections(
-  config.seedingArtistList,
-  config.connectionsFile,
-  config.popularityThreshold
+  popularityThreshold,
+  connectionsFile,
+  idSetCacheFile,
+  processingQueueCacheFile,
+  dailyRequestLimit,
+  pauseAfterSeconds,
+  pauseForSeconds,
+  seedingArtistList
 )
