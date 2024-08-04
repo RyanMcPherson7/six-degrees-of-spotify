@@ -191,7 +191,6 @@ button::before {
 
 .artist-profile {
   padding: 0.75rem 0;
-  transition: transform 0.5s ease-in-out;
 }
 
 .artist-image {
@@ -199,13 +198,14 @@ button::before {
   height: 8rem;
   border-radius: 10rem;
   border: 0.45rem solid var(--color-green);
-  transition: border-color 0.5s ease-in-out;
+  transition: all 0.35s ease-in-out;
 }
 
 .artist-name {
   font-size: 1.1rem;
   margin-top: 0.4rem;
   color: var(--color-white);
+  transition: color 0.35s ease-in-out;
 }
 
 .horizontal-double-arrow {
@@ -312,10 +312,6 @@ button::before {
     font-size: 1.3rem;
   }
 
-  header h4 a:hover {
-    color: var(--color-green);
-  }
-
   header p {
     font-size: 1.3rem;
   }
@@ -334,24 +330,8 @@ button::before {
     padding: 0.6rem 1.8rem;
   }
 
-  button:hover {
-    cursor: pointer;
-  }
-
-  button:hover::before {
-    transform: scaleX(1);
-  }
-
   .artist-panel {
     grid-template-columns: 1fr 0.1fr 1fr 0.1fr;
-  }
-
-  .artist-profile:hover {
-    transform: scale(1.07);
-  }
-
-  .artist-image:hover {
-    border-color: var(--color-white);
   }
 
   .artist-image,
@@ -396,5 +376,29 @@ button::before {
   .artist-profile,
   .loading-artist-profile {
     margin: 0.5rem 0;
+  }
+}
+
+/* adding hover effects */
+@media (hover: hover) {
+  header h4 a:hover {
+    color: var(--color-green);
+  }
+
+  button:hover {
+    cursor: pointer;
+  }
+
+  button:hover::before {
+    transform: scaleX(1);
+  }
+
+  .artist-name:hover {
+    color: var(--color-green);
+  }
+
+  .artist-image:hover {
+    border-color: var(--color-white);
+    transform: scale(1.09);
   }
 }
