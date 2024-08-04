@@ -8,7 +8,7 @@ const processingQueueCacheFile = `../data/processing-queue-cache-${popularityThr
 
 const dailyRequestLimit = 9750
 
-const pauseAfterSeconds = 1
+const pauseAfterSeconds = 15
 
 const pauseForSeconds = 10
 
