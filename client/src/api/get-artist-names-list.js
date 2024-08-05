@@ -1,5 +1,5 @@
 const getArtistNameList = async () => {
-  const res = await fetch('api/artists/', {
+  const res = await fetch('api/artists', {
     method: 'GET',
     headers: {
       Accept: 'application/json',
