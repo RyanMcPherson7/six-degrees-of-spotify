@@ -190,6 +190,7 @@ button::before {
 }
 
 .artist-profile {
+  display: inline;
   padding: 0.75rem 0;
 }
 
@@ -353,6 +354,11 @@ button::before {
     width: 55%;
     font-size: 1rem;
     margin-top: 1.4rem;
+  }
+
+  .loading-artist-icon {
+    width: 3.5rem;
+    height: 3.5rem;
   }
 }
 

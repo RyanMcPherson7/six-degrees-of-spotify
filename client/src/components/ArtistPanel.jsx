@@ -3,23 +3,23 @@ import { FaArrowsAltH } from 'react-icons/fa'
 import ArtistProfile from './ArtistProfile'
 
 const ArtistPanel = ({ path }) => (
-  <ul className="artist-panel">
+  <div className="artist-panel">
     {path.map((artist) => (
       <>
-        <li className="artist-profile" key={artist.id}>
+        <div className="artist-profile" key={artist.id}>
           <ArtistProfile
             artistName={artist.artist}
             artistId={artist.id}
             artistImage={artist.image}
           />
-        </li>
+        </div>
 
         {artist.artist !== path[path.length - 1].artist && (
           <FaArrowsAltH className="horizontal-double-arrow" />
         )}
       </>
     ))}
-  </ul>
+  </div>
 )
 
 ArtistPanel.propTypes = {
