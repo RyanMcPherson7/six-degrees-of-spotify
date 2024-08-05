@@ -8,7 +8,7 @@ A web app to find the shortest path between 2 popular Spotify artists using data
 ## :crystal_ball: How it Works
 1. Six Degrees of Spotify consists of both a React [`/client`](/client) and a Node.js [`/server`](/server)
 2. Users interact with the UI to send requests to the server to compute their requested artist path
-3. Upon request, the server will generate an unweighted, bidirectional [graph](https://en.wikipedia.org/wiki/Graph_(abstract_data_type)) with ~11,000 vertices (artists) and ~112,000 edges (connections) from a [`flat-file`](/server/data/connections-50.txt)
+3. Upon request, the server will generate an unweighted, bidirectional [graph](https://en.wikipedia.org/wiki/Graph_(abstract_data_type)) with ~15,000 vertices (artists) and ~160,000 edges (connections) from a [`flat-file`](/server/data/connections-50.txt)
 4. The data inside the flat-file was generated on 7/25/22 with a [popularity](https://help.chartmetric.com/en/articles/1560578-what-is-spotify-popularity-index) minimum of 50 using code from [`/server/data-scrapping`](/server/data-scrapping) and the [`GET /v1/artists/{id}/related-artists`](https://developer.spotify.com/console/get-artist-related-artists/) endpoint from the [Spotify Web API](https://developer.spotify.com/documentation/web-api/)
 5. After building the graph, [breadth first search](https://www.hackerearth.com/practice/algorithms/graphs/breadth-first-search/tutorial/) is run to find the shortest path (smallest degree) between the 2 input artists
 6. Finally, the server sends the computed path to the client to be displayed
