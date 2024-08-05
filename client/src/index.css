@@ -267,7 +267,7 @@ button::before {
 }
 
 .loading-artist-name {
-  margin: 0.8rem auto 0;
+  margin: 1.4rem auto 0;
   font-size: 0.7rem;
   width: 45%;
   animation: skeleton-loading-bg 1s linear infinite alternate;
@@ -352,7 +352,7 @@ button::before {
   .loading-artist-name {
     width: 55%;
     font-size: 1rem;
-    margin-top: 1rem;
+    margin-top: 1.4rem;
   }
 }
 
