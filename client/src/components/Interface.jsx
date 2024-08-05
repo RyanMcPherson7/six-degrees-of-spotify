@@ -118,7 +118,7 @@ const Interface = () => {
           }}
           type="submit"
         >
-          <FaTelegramPlane style={{ marginRight: '0.2rem' }} />
+          <FaTelegramPlane style={{ marginRight: '0.25rem' }} />
           Find Path
         </button>
         <button
@@ -128,7 +128,7 @@ const Interface = () => {
           }}
           type="submit"
         >
-          <FaRandom style={{ marginRight: '0.2rem' }} />
+          <FaRandom style={{ marginRight: '0.25rem' }} />
           Random
         </button>
       </form>
