@@ -1,51 +1,52 @@
 import PropTypes from 'prop-types'
-import { useEffect, useState } from 'react'
 
 const InvalidArtistsMessage = ({ invalidArtists }) => {
-  const [message, setMessage] = useState([])
+  if (invalidArtists[0]?.length === 0 && invalidArtists[1]?.length === 0) {
+    return (
+      <div id="error-message-container">
+        <h4 id="error-message">
+          Whoops! You forgot to enter both start and end artist names.
+        </h4>
+      </div>
+    )
+  }
 
-  useEffect(() => {
-    const messages = [<span>Whoops! </span>]
+  if (invalidArtists[0]?.length === 0 || invalidArtists[1]?.length === 0) {
+    return (
+      <div id="error-message-container">
+        <h4 id="error-message">Whoops! You forgot to enter an artist name.</h4>
+      </div>
+    )
+  }
 
-    if (invalidArtists[0]?.length === 0 && invalidArtists[1]?.length === 0) {
-      messages.push(
-        <span>You forgot to enter both start and end artist names.</span>,
-      )
-    } else if (
-      invalidArtists[0]?.length === 0 ||
-      invalidArtists[1]?.length === 0
-    ) {
-      messages.push(<span>You forgot to enter an artist name.</span>)
-    } else {
-      if (invalidArtists.length === 1) {
-        messages.push(
-          <span>
-            "<span className="special">{invalidArtists[0]}</span>" was{' '}
-          </span>,
-        )
-      } else {
-        messages.push(
-          <span>
-            "<span className="special">{invalidArtists[0]}</span>" and "
-            <span className="special">{invalidArtists[1]}</span>" were
-          </span>,
-        )
-      }
-
-      messages.push(
-        <span>
-          not found in our database. Names must be exact and artists must have a
+  if (invalidArtists.length === 1) {
+    return (
+      <div id="error-message-container">
+        <h4 id="error-message">
+          Whoops! "<span className="special">{invalidArtists[0]}</span>" was not
+          found in our database. Names must be exact and artists must have a
           Spotify popularity score of 50 or greater.
-        </span>,
-      )
-    }
+        </h4>
+      </div>
+    )
+  }
 
-    setMessage(messages)
-  }, [invalidArtists])
+  if (invalidArtists.length === 2) {
+    return (
+      <div id="error-message-container">
+        <h4 id="error-message">
+          Whoops! "<span className="special">{invalidArtists[0]}</span>" and "
+          <span className="special">{invalidArtists[1]}</span>" were not found
+          in our database. Names must be exact and artists must have a Spotify
+          popularity score of 50 or greater.
+        </h4>
+      </div>
+    )
+  }
 
   return (
     <div id="error-message-container">
-      <h4 id="error-message">{message}</h4>
+      <h4 id="error-message">Invalid error</h4>
     </div>
   )
 }

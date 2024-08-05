@@ -4,7 +4,7 @@ const getPath = async (startArtist, endArtist) => {
     end: endArtist,
   }
 
-  const res = await fetch(`/api/path`, {
+  const res = await fetch(`api/path`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
