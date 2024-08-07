@@ -31,7 +31,7 @@ ArtistPanel.propTypes = {
       artist: PropTypes.string,
       id: PropTypes.string,
       image: PropTypes.string,
-    }),
+    })
   ).isRequired,
 }
 
