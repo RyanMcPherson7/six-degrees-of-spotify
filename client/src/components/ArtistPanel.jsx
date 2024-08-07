@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { FaArrowsAltH } from 'react-icons/fa'
+import { FaArrowsAltH, FaArrowsAltV } from 'react-icons/fa'
 import ArtistProfile from './ArtistProfile'
 
 const ArtistPanel = ({ path }) => (
@@ -15,7 +15,10 @@ const ArtistPanel = ({ path }) => (
         </div>
 
         {artist.artist !== path[path.length - 1].artist && (
-          <FaArrowsAltH className="horizontal-double-arrow" />
+          <>
+            <FaArrowsAltH className="desktop-horizontal-double-arrow" />
+            <FaArrowsAltV className="mobile-vertical-double-arrow" />
+          </>
         )}
       </>
     ))}
@@ -28,7 +31,7 @@ ArtistPanel.propTypes = {
       artist: PropTypes.string,
       id: PropTypes.string,
       image: PropTypes.string,
-    })
+    }),
   ).isRequired,
 }
 
