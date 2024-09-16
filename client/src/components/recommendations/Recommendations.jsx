@@ -1,7 +1,6 @@
-import PropTypes from 'prop-types'
 import RecommendationCard from './RecommendationCard'
 
-const Recommendations = ({ setQueryParams }) => {
+const Recommendations = () => {
   const recs = [
     { start: 'Porter Robinson', end: 'Taylor Swift' },
     { start: 'The Marías', end: 'Ken Carson' },
@@ -14,18 +13,10 @@ const Recommendations = ({ setQueryParams }) => {
   return (
     <div id="recommendations">
       {recs.map((rec) => (
-        <RecommendationCard
-          startName={rec.start}
-          endName={rec.end}
-          setQueryParams={setQueryParams}
-        />
+        <RecommendationCard startName={rec.start} endName={rec.end} />
       ))}
     </div>
   )
-}
-
-Recommendations.propTypes = {
-  setQueryParams: PropTypes.func.isRequired,
 }
 
 export default Recommendations

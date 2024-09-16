@@ -154,9 +154,7 @@ const Interface = () => {
       <MainContentPanel pathApiRes={artistPath} isLoading={isLoading} />
 
       {/* render recommendations if both names are blank or entered an invalid artist(s) */}
-      {(!artistPath.valid || (!startName && !endName)) && (
-        <Recommendations setQueryParams={setQueryParams} />
-      )}
+      {(!artistPath.valid || (!startName && !endName)) && <Recommendations />}
     </>
   )
 }
