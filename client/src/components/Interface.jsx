@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react'
 import { FaLongArrowAltDown, FaRandom, FaTelegramPlane } from 'react-icons/fa'
+import { useSearchParams } from 'react-router-dom'
 import getPath from '../api/get-path'
 import getRandomArtist from '../api/get-random-artists'
 import MainContentPanel from './MainContentPanel'
 import getArtistNameList from '../api/get-artist-names-list'
 
 const Interface = () => {
+  const [queryParams, setQueryParams] = useSearchParams()
   const [artistPath, setArtistPath] = useState({ valid: true, path: [] })
   const [isLoading, setIsLoading] = useState(false)
-  const [startName, setStartName] = useState('')
-  const [endName, setEndName] = useState('')
+  const [startName, setStartName] = useState(queryParams.get('start') || '')
+  const [endName, setEndName] = useState(queryParams.get('end') || '')
   const [artistNamesList, setArtistNamesList] = useState([])
   const [autocompStartNames, setAutocompStartNames] = useState([])
   const [autocompEndNames, setAutocompEndNames] = useState([])
@@ -20,6 +22,7 @@ const Interface = () => {
   }
 
   const onSubmitPath = async () => {
+    setQueryParams({ start: startName, end: endName })
     setIsLoading(true)
     const res = await getPath(startName, endName)
     setIsLoading(false)
@@ -31,15 +34,20 @@ const Interface = () => {
     setEndName('...')
     setIsLoading(true)
     const res = await getRandomArtist()
-    setIsLoading(false)
     setStartName(res.start)
     setEndName(res.end)
+    setQueryParams({ start: res.start, end: res.end })
+    setIsLoading(false)
     setArtistPath(res)
   }
 
   // fetch all artist names on initial render
+  // compute path if start and/or end artist already provided via query params
   useEffect(() => {
     fetchArtistNamesList()
+    if (startName || endName) {
+      onSubmitPath()
+    }
   }, [])
 
   // grab limited number of names that match input string
