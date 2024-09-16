@@ -57,7 +57,9 @@ const Interface = () => {
 
   // compute path when query params change
   useEffect(() => {
-    onSubmitPath()
+    if (queryParams.get('start') || queryParams.get('end')) {
+      onSubmitPath()
+    }
   }, [queryParams])
 
   // grab limited number of names that match input string
