@@ -34,7 +34,7 @@ app.get('/api/path', (req, res) => {
 
 // returns an object with a random start and random end artist
 app.get('/api/random', (req, res) => {
-  res.json(getRandomArtists(connectionsFile, graph, artistDataMap))
+  res.json(getRandomArtists(graph, artistDataMap))
 })
 
 app.get('/api/artists', (req, res) => {
