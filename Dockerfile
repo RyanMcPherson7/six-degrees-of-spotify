@@ -21,7 +21,7 @@ COPY ./server/package*.json ./
 RUN npm ci --omit=dev
 
 COPY ./server/src ./src
-COPY ./server/data ./data
+COPY ./server/data/connections-50.txt ./data/connections-50.txt
 
 USER node
 EXPOSE 5000
