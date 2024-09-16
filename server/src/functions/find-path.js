@@ -1,14 +1,15 @@
 const { BFS } = require('./bfs')
 const { Stack } = require('../classes/stack')
-const { Graph } = require('../classes/graph')
-const { populateGraph } = require('./populate-graph')
 
-const findPath = (start, end, connectionsFile) => {
-  // building graph
-  const graph = new Graph()
-  const artistDataMap = new Map()
-  populateGraph(graph, artistDataMap, connectionsFile)
-
+/**
+ *
+ * @param {string} start starting artist Spotify name
+ * @param {string} end starting artist Spotify name
+ * @param {Graph} graph adjacency list graph of artist connections
+ * @param {Map} artistDataMap maps artist Spotify name to their meta data (i.e. name, Spotify id, and image)
+ * @returns if valid input artists, returns list of artist path connecting start from finish including each artist's metadata. in invalid input artist(s), returns list of invalid artists
+ */
+const findPath = (start, end, graph, artistDataMap) => {
   // checking input validity
   const invalidArtists = []
 
