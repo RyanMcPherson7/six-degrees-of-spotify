@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react'
 import { FaLongArrowAltDown, FaRandom, FaTelegramPlane } from 'react-icons/fa'
+import { useSearchParams } from 'react-router-dom'
 import getPath from '../api/get-path'
 import getRandomArtist from '../api/get-random-artists'
 import MainContentPanel from './MainContentPanel'
 import getArtistNameList from '../api/get-artist-names-list'
+import Recommendations from './recommendations/Recommendations'
 
 const Interface = () => {
+  const [queryParams, setQueryParams] = useSearchParams()
   const [artistPath, setArtistPath] = useState({ valid: true, path: [] })
   const [isLoading, setIsLoading] = useState(false)
-  const [startName, setStartName] = useState('')
-  const [endName, setEndName] = useState('')
+  const [startName, setStartName] = useState(queryParams.get('start') ?? '')
+  const [endName, setEndName] = useState(queryParams.get('end') ?? '')
   const [artistNamesList, setArtistNamesList] = useState([])
-  const [autocompStartNames, setAutocompStartNames] = useState([])
-  const [autocompEndNames, setAutocompEndNames] = useState([])
+  const [autoCompStartNames, setAutoCompStartNames] = useState([])
+  const [autoCompEndNames, setAutoCompEndNames] = useState([])
 
   const fetchArtistNamesList = async () => {
     const res = await getArtistNameList()
@@ -20,8 +23,13 @@ const Interface = () => {
   }
 
   const onSubmitPath = async () => {
+    const start = queryParams.get('start') ?? ''
+    const end = queryParams.get('end') ?? ''
+
     setIsLoading(true)
-    const res = await getPath(startName, endName)
+    setStartName(start)
+    setEndName(end)
+    const res = await getPath(start, end)
     setIsLoading(false)
     setArtistPath(res)
   }
@@ -31,16 +39,28 @@ const Interface = () => {
     setEndName('...')
     setIsLoading(true)
     const res = await getRandomArtist()
-    setIsLoading(false)
     setStartName(res.start)
     setEndName(res.end)
+    setQueryParams({ start: res.start, end: res.end })
+    setIsLoading(false)
     setArtistPath(res)
   }
 
   // fetch all artist names on initial render
+  // compute path if start and/or end artist already provided via query params
   useEffect(() => {
     fetchArtistNamesList()
+    if (startName || endName) {
+      onSubmitPath()
+    }
   }, [])
+
+  // compute path when query params change
+  useEffect(() => {
+    if (queryParams.get('start') || queryParams.get('end')) {
+      onSubmitPath()
+    }
+  }, [queryParams])
 
   // grab limited number of names that match input string
   // to render inside datalist to reduce number of
@@ -48,7 +68,7 @@ const Interface = () => {
   useEffect(() => {
     if (startName.length < 3) return
 
-    setAutocompStartNames(
+    setAutoCompStartNames(
       artistNamesList.filter((name) =>
         name.toLowerCase().includes(startName.toLowerCase())
       )
@@ -58,7 +78,7 @@ const Interface = () => {
   useEffect(() => {
     if (endName.length < 3) return
 
-    setAutocompEndNames(
+    setAutoCompEndNames(
       artistNamesList.filter((name) =>
         name.toLowerCase().includes(endName.toLowerCase())
       )
@@ -78,7 +98,7 @@ const Interface = () => {
         />
         <datalist id="start-input-options">
           {startName.length >= 3 &&
-            autocompStartNames.map((name) => (
+            autoCompStartNames.map((name) => (
               <option value={name} key={name}>
                 {name}
               </option>
@@ -104,7 +124,7 @@ const Interface = () => {
         />
         <datalist id="end-input-options">
           {endName.length >= 3 &&
-            autocompEndNames.map((name) => (
+            autoCompEndNames.map((name) => (
               <option value={name} key={name}>
                 {name}
               </option>
@@ -114,7 +134,7 @@ const Interface = () => {
         <button
           onClick={(e) => {
             e.preventDefault()
-            onSubmitPath()
+            setQueryParams({ start: startName, end: endName })
           }}
           type="submit"
         >
@@ -132,7 +152,11 @@ const Interface = () => {
           Random
         </button>
       </form>
+
       <MainContentPanel pathApiRes={artistPath} isLoading={isLoading} />
+
+      {/* render recommendations if both names are blank or entered an invalid artist(s) */}
+      {(!artistPath.valid || (!startName && !endName)) && <Recommendations />}
     </>
   )
 }
