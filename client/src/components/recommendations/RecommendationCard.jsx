@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import { useSearchParams } from 'react-router-dom'
+import { HiExternalLink } from 'react-icons/hi'
 
 const RecommendationCard = ({ startName, endName }) => {
   const [queryParams, setQueryParams] = useSearchParams()
@@ -11,8 +12,10 @@ const RecommendationCard = ({ startName, endName }) => {
         setQueryParams({ start: startName, end: endName })
       }}
       type="button"
+      className="recommendation-card"
     >
-      {startName} → {endName}
+      <HiExternalLink className="recommendation-card-icon" />
+      {startName} ⬌ {endName}
     </button>
   )
 }

@@ -12,9 +12,12 @@ const Recommendations = () => {
 
   return (
     <div id="recommendations">
-      {recs.map((rec) => (
-        <RecommendationCard startName={rec.start} endName={rec.end} />
-      ))}
+      <h4 id="recommendation-text">You could also try:</h4>
+      <div id="recommendations-list">
+        {recs.map((rec) => (
+          <RecommendationCard startName={rec.start} endName={rec.end} />
+        ))}
+      </div>
     </div>
   )
 }

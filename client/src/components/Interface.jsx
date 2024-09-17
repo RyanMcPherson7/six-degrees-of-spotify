@@ -14,8 +14,8 @@ const Interface = () => {
   const [startName, setStartName] = useState(queryParams.get('start') ?? '')
   const [endName, setEndName] = useState(queryParams.get('end') ?? '')
   const [artistNamesList, setArtistNamesList] = useState([])
-  const [autocompStartNames, setAutocompStartNames] = useState([])
-  const [autocompEndNames, setAutocompEndNames] = useState([])
+  const [autoCompStartNames, setAutoCompStartNames] = useState([])
+  const [autoCompEndNames, setAutoCompEndNames] = useState([])
 
   const fetchArtistNamesList = async () => {
     const res = await getArtistNameList()
@@ -68,7 +68,7 @@ const Interface = () => {
   useEffect(() => {
     if (startName.length < 3) return
 
-    setAutocompStartNames(
+    setAutoCompStartNames(
       artistNamesList.filter((name) =>
         name.toLowerCase().includes(startName.toLowerCase())
       )
@@ -78,7 +78,7 @@ const Interface = () => {
   useEffect(() => {
     if (endName.length < 3) return
 
-    setAutocompEndNames(
+    setAutoCompEndNames(
       artistNamesList.filter((name) =>
         name.toLowerCase().includes(endName.toLowerCase())
       )
@@ -98,7 +98,7 @@ const Interface = () => {
         />
         <datalist id="start-input-options">
           {startName.length >= 3 &&
-            autocompStartNames.map((name) => (
+            autoCompStartNames.map((name) => (
               <option value={name} key={name}>
                 {name}
               </option>
@@ -124,7 +124,7 @@ const Interface = () => {
         />
         <datalist id="end-input-options">
           {endName.length >= 3 &&
-            autocompEndNames.map((name) => (
+            autoCompEndNames.map((name) => (
               <option value={name} key={name}>
                 {name}
               </option>

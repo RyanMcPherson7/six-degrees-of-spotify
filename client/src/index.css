@@ -313,8 +313,53 @@ button::before {
 }
 
 /* ================================ */
+/*           RECOMMENDATIONS        */
+/* ================================ */
+#recommendations {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 3rem;
+}
+
+#recommendation-text {
+  font-size: 1.2rem;
+}
+
+#recommendations-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.recommendation-card {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  width: 17rem;
+  border-radius: 0.4rem;
+  padding: 0.5rem;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+}
+
+.recommendation-card-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* ================================ */
 /*           MEDIA QUERIES          */
 /* ================================ */
+@media (min-width: 375px) {
+  .recommendation-card {
+    width: 21rem;
+    font-size: 1rem;
+  }
+}
+
 @media (min-width: 700px) {
   header h1 {
     font-size: 3rem;
@@ -377,6 +422,20 @@ button::before {
     width: 3.5rem;
     height: 3.5rem;
   }
+
+  #recommendation-text {
+    font-size: 1.5rem;
+  }
+
+  .recommendation-card {
+    width: 28rem;
+    font-size: 1.2rem
+  }
+  
+  .recommendation-card-icon {
+    width: 2rem;
+    height: 2rem;
+  }
 }
 
 @media (min-width: 900px) {
@@ -399,6 +458,16 @@ button::before {
   .artist-profile,
   .loading-artist-profile {
     margin: 0.5rem 0;
+  }
+
+  #recommendations-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .recommendation-card {
+    margin: 0;
   }
 }
 
