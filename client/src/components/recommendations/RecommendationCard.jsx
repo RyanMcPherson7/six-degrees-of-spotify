@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { HiExternalLink } from 'react-icons/hi'
 
 const RecommendationCard = ({ startName, endName }) => {
-  const [queryParams, setQueryParams] = useSearchParams()
+  const [, setQueryParams] = useSearchParams()
 
   return (
     <button
