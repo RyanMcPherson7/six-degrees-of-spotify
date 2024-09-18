@@ -17,6 +17,7 @@ app.use(express.json())
 const graph = new Graph()
 const artistDataMap = new Map()
 populateGraph(graph, artistDataMap, connectionsFile)
+const artistNamesList = getArtistNameList(connectionsFile)
 
 // takes input from request body and returns path with artist names, ids, and images
 app.post('/api/path', (req, res) => {
@@ -34,11 +35,13 @@ app.get('/api/path', (req, res) => {
 
 // returns an object with a random start and random end artist
 app.get('/api/random', (req, res) => {
-  res.json(getRandomArtists(graph, artistDataMap))
+  res.json(
+    getRandomArtists(graph, artistDataMap, artistNamesList.artistNamesList)
+  )
 })
 
 app.get('/api/artists', (req, res) => {
-  res.json(getArtistNameList(connectionsFile))
+  res.json(artistNamesList)
 })
 
 // serve static client files in production
