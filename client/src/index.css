@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap');
+
 
 :root {
   --color-white: #fff;
@@ -82,6 +84,7 @@ header {
 }
 
 header h1 {
+  font-family: 'Fugaz One', sans-serif;
   padding: 1rem 2rem 0;
   color: var(--color-green);
 }
