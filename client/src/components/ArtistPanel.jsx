@@ -4,9 +4,13 @@ import ArtistProfile from './ArtistProfile'
 
 const ArtistPanel = ({ path }) => (
   <div className="artist-panel">
-    {path.map((artist) => (
+    {path.map((artist, i) => (
       <>
-        <div className="artist-profile" key={artist.id}>
+        <div
+          className="artist-profile"
+          key={artist.id}
+          style={{ animationDelay: `${i * 0.3}s` }}
+        >
           <ArtistProfile
             artistName={artist.artist}
             artistId={artist.id}
@@ -16,8 +20,11 @@ const ArtistPanel = ({ path }) => (
 
         {artist.artist !== path[path.length - 1].artist && (
           <>
-            <FaArrowsAltH className="desktop-horizontal-double-arrow" />
             <FaArrowsAltV className="mobile-vertical-double-arrow" />
+            <FaArrowsAltH
+              className="desktop-horizontal-double-arrow desktop-arrow-fade-in"
+              style={{ animationDelay: `${i * 0.3}s` }}
+            />
           </>
         )}
       </>
