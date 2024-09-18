@@ -2,8 +2,11 @@ import PropTypes from 'prop-types'
 import LoadingArtistPanel from './LoadingArtistPanel'
 import InvalidArtistsMessage from './InvalidArtistsMessage'
 import ArtistPanel from './ArtistPanel'
+import DegreeOfSeparationMessage from './DegreeOfSeparationMessage'
 
 export const MainContentPanel = ({ pathApiRes, isLoading }) => {
+  const { path } = pathApiRes
+
   if (isLoading) {
     return <LoadingArtistPanel />
   }
@@ -12,7 +15,16 @@ export const MainContentPanel = ({ pathApiRes, isLoading }) => {
     return <InvalidArtistsMessage invalidArtists={pathApiRes.invalid_artists} />
   }
 
-  return <ArtistPanel path={pathApiRes.path} />
+  return (
+    <>
+      <DegreeOfSeparationMessage
+        degreeOfSeparation={path.length}
+        startName={path[0]?.artist ?? ''}
+        endName={path[path.length - 1]?.artist ?? ''}
+      />
+      <ArtistPanel path={path} />
+    </>
+  )
 }
 
 MainContentPanel.propTypes = {

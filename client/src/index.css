@@ -180,7 +180,6 @@ button::before {
 /*           ARTIST PANEL           */
 /* ================================ */
 .artist-panel {
-  padding-top: 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
@@ -240,6 +239,18 @@ button::before {
   text-align: center;
   margin: 1.5rem;
   line-height: 1.8rem;
+}
+
+#degree-of-separation-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#degree-of-separation-message {
+  padding: 2rem 1.5rem 0;
+  text-align: center;
+  max-width: 900px;
 }
 
 /* ================================ */
@@ -391,6 +402,7 @@ button::before {
   .artist-panel {
     display: grid;
     grid-template-columns: 1fr 0.1fr 1fr 0.1fr;
+    align-items: start;
   }
 
   .artist-image,
@@ -410,6 +422,11 @@ button::before {
 
   .desktop-horizontal-double-arrow {
     display: flex;
+  }
+
+  #degree-of-separation-message {
+    padding-top: 2rem;
+    font-size: 1.4rem;
   }
 
   .loading-artist-name {
