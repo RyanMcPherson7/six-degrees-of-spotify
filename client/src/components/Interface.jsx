@@ -70,8 +70,8 @@ const Interface = () => {
 
     setAutoCompStartNames(
       artistNamesList.filter((name) =>
-        name.toLowerCase().includes(startName.toLowerCase())
-      )
+        name.toLowerCase().includes(startName.toLowerCase()),
+      ),
     )
   }, [startName])
 
@@ -80,8 +80,8 @@ const Interface = () => {
 
     setAutoCompEndNames(
       artistNamesList.filter((name) =>
-        name.toLowerCase().includes(endName.toLowerCase())
-      )
+        name.toLowerCase().includes(endName.toLowerCase()),
+      ),
     )
   }, [endName])
 
@@ -156,7 +156,10 @@ const Interface = () => {
       <MainContentPanel pathApiRes={artistPath} isLoading={isLoading} />
 
       {/* render recommendations if both names are blank or entered an invalid artist(s) */}
-      {(!artistPath.valid || (!startName && !endName)) && <Recommendations />}
+      {(!artistPath.valid ||
+        (!queryParams.get('start') && !queryParams.get('end'))) && (
+        <Recommendations />
+      )}
     </>
   )
 }
