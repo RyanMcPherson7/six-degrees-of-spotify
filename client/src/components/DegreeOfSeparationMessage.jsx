@@ -10,13 +10,13 @@ const DegreeOfSeparationMessage = ({
       return ''
     case 1:
       return (
-        <div id="degree-of-separation-container">
+        <div className="degree-of-separation-container">
           <p id="degree-of-separation-message">This is the same artist:</p>
         </div>
       )
     case 2:
       return (
-        <div id="degree-of-separation-container">
+        <div className="degree-of-separation-container">
           <p id="degree-of-separation-message">
             <span className="special">{startName}</span> and{' '}
             <span className="special">{endName}</span> are directly connected:
@@ -25,7 +25,7 @@ const DegreeOfSeparationMessage = ({
       )
     default:
       return (
-        <div id="degree-of-separation-container">
+        <div className="degree-of-separation-container">
           <p id="degree-of-separation-message">
             <span className="special">{startName}</span> and{' '}
             <span className="special">{endName}</span> are connected through{' '}
