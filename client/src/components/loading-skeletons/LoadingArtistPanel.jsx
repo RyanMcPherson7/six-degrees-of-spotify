@@ -12,12 +12,12 @@ const LoadingArtistPanel = () => {
               <FaMusic className="loading-artist-icon" />
             </div>
 
-            <h4 className="loading-artist-name">Loading Artist</h4>
+            <h4 className="loading-artist-name">M</h4>
           </div>
           {num !== 8 && (
             <>
-              <FaArrowsAltH className="desktop-horizontal-double-arrow loading-artist-arrow" />
               <FaArrowsAltV className="mobile-vertical-double-arrow loading-artist-arrow" />
+              <FaArrowsAltH className="desktop-horizontal-double-arrow loading-artist-arrow" />
             </>
           )}
         </>
