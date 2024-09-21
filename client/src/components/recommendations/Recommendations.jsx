@@ -1,6 +1,7 @@
+import PropTypes from 'prop-types'
 import RecommendationCard from './RecommendationCard'
 
-const Recommendations = () => {
+const Recommendations = ({ onSubmitPathWithNames }) => {
   const recs = [
     { start: 'Porter Robinson', end: 'Taylor Swift' },
     { start: 'The Marías', end: 'Ken Carson' },
@@ -15,11 +16,19 @@ const Recommendations = () => {
       <h4 id="recommendation-text">You could also try:</h4>
       <div id="recommendations-list">
         {recs.map((rec) => (
-          <RecommendationCard startName={rec.start} endName={rec.end} />
+          <RecommendationCard
+            startName={rec.start}
+            endName={rec.end}
+            onSubmitPathWithNames={onSubmitPathWithNames}
+          />
         ))}
       </div>
     </div>
   )
+}
+
+Recommendations.propTypes = {
+  onSubmitPathWithNames: PropTypes.func.isRequired,
 }
 
 export default Recommendations
