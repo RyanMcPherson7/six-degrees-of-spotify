@@ -70,8 +70,8 @@ const Interface = () => {
 
     setAutoCompStartNames(
       artistNamesList.filter((name) =>
-        name.toLowerCase().includes(startName.toLowerCase()),
-      ),
+        name.toLowerCase().includes(startName.toLowerCase())
+      )
     )
   }, [startName])
 
@@ -80,8 +80,8 @@ const Interface = () => {
 
     setAutoCompEndNames(
       artistNamesList.filter((name) =>
-        name.toLowerCase().includes(endName.toLowerCase()),
-      ),
+        name.toLowerCase().includes(endName.toLowerCase())
+      )
     )
   }, [endName])
 
