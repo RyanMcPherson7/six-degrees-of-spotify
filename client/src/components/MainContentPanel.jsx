@@ -1,4 +1,6 @@
+import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import { FaArrowAltCircleDown } from 'react-icons/fa'
 import LoadingArtistPanel from './loading-skeletons/LoadingArtistPanel'
 import LoadingSeparationMessage from './loading-skeletons/LoadingSeparationMessage'
 import InvalidArtistsMessage from './InvalidArtistsMessage'
@@ -6,7 +8,21 @@ import ArtistPanel from './ArtistPanel'
 import DegreeOfSeparationMessage from './DegreeOfSeparationMessage'
 
 export const MainContentPanel = ({ pathApiRes, isLoading }) => {
+  const [scrollPosition, setScrollPosition] = useState(0)
   const { path } = pathApiRes
+
+  // scroll position listener
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollPosition(window.scrollY)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
 
   if (isLoading) {
     return (
@@ -23,12 +39,23 @@ export const MainContentPanel = ({ pathApiRes, isLoading }) => {
 
   return (
     <>
+      <a
+        href="#results-bottom"
+        id="mobile-result-arrow-button"
+        style={{
+          left: scrollPosition < 400 ? '8vw' : '-40px',
+        }}
+      >
+        <FaArrowAltCircleDown id="mobile-result-down-arrow" />
+      </a>
+
       <DegreeOfSeparationMessage
         degreeOfSeparation={path.length}
         startName={path[0]?.artist ?? ''}
         endName={path[path.length - 1]?.artist ?? ''}
       />
       <ArtistPanel path={path} />
+      <div id="results-bottom" />
     </>
   )
 }

@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap');
 
-
 :root {
   --color-white: #fff;
   --color-black: #000000;
@@ -21,6 +20,7 @@ html {
   background-color: var(--color-black);
   color: var(--color-white);
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 a {
@@ -256,6 +256,29 @@ button::before {
   max-width: 900px;
 }
 
+#mobile-result-arrow-button {
+  position: fixed;
+  bottom: 30px;
+  left: 8vw;
+  color: var(--color-white);
+  transition: left 1s ease-in-out;
+  animation: up-and-down 1.7s ease-in-out infinite;
+}
+
+#mobile-result-down-arrow {
+  width: 2.2rem;
+  height: 2.2rem;
+}
+
+@keyframes up-and-down {
+  50% {
+    transform: translateY(20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 /* ================================ */
 /*       Artist Panel Loading       */
 /* ================================ */
@@ -478,6 +501,10 @@ button::before {
     border-radius: 0.3rem;
   }
 
+  #mobile-result-arrow-button {
+    display: none;
+  }
+
   .loading-artist-name {
     width: 150px;
     font-size: 1rem;
@@ -494,7 +521,7 @@ button::before {
   }
 
   .recommendation-card {
-    width: 28rem;
+    width: 23rem;
     font-size: 1.2rem
   }
   
