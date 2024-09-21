@@ -23,13 +23,9 @@ const Interface = () => {
   }
 
   const onSubmitPath = async () => {
-    const start = queryParams.get('start') ?? ''
-    const end = queryParams.get('end') ?? ''
-
     setIsLoading(true)
-    setStartName(start)
-    setEndName(end)
-    const res = await getPath(start, end)
+    const res = await getPath(startName, endName)
+    setQueryParams({ start: startName, end: endName })
     setIsLoading(false)
     setArtistPath(res)
   }
@@ -42,6 +38,7 @@ const Interface = () => {
     setStartName(res.start)
     setEndName(res.end)
     setQueryParams({ start: res.start, end: res.end })
+    setArtistPath(res)
     setIsLoading(false)
     setArtistPath(res)
   }
@@ -54,13 +51,6 @@ const Interface = () => {
       onSubmitPath()
     }
   }, [])
-
-  // compute path when query params change
-  useEffect(() => {
-    if (queryParams.get('start') || queryParams.get('end')) {
-      onSubmitPath()
-    }
-  }, [queryParams])
 
   // grab limited number of names that match input string
   // to render inside datalist to reduce number of
@@ -134,7 +124,7 @@ const Interface = () => {
         <button
           onClick={(e) => {
             e.preventDefault()
-            setQueryParams({ start: startName, end: endName })
+            onSubmitPath()
           }}
           type="submit"
         >
