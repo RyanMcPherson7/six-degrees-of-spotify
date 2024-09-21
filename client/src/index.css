@@ -261,13 +261,13 @@ button::before {
   bottom: 30px;
   left: 8vw;
   color: var(--color-white);
-  transition: left 1s ease-in-out;
+  transition: left 0.6s ease-in-out;
   animation: up-and-down 1.7s ease-in-out infinite;
 }
 
 #mobile-result-down-arrow {
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 2.4rem;
+  height: 2.4rem;
 }
 
 @keyframes up-and-down {
@@ -284,7 +284,7 @@ button::before {
 /* ================================ */
 #loading-degree-of-separation-message {
   margin: 1.93rem 0 auto 0;
-  font-size: 2rem;
+  font-size: 2.1rem;
   width: 70%;
   animation: skeleton-loading-bg 1s linear infinite alternate;
   opacity: 0.7;

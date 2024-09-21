@@ -37,6 +37,11 @@ export const MainContentPanel = ({ pathApiRes, isLoading }) => {
     return <InvalidArtistsMessage invalidArtists={pathApiRes.invalid_artists} />
   }
 
+  // initial load (start and end are blank)
+  if (path?.length === 0) {
+    return <div className="artist-panel" />
+  }
+
   return (
     <>
       <a
