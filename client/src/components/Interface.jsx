@@ -30,6 +30,16 @@ const Interface = () => {
     setArtistPath(res)
   }
 
+  const onSubmitPathWithNames = async (start, end) => {
+    setStartName(start)
+    setEndName(end)
+    setIsLoading(true)
+    const res = await getPath(start, end)
+    setQueryParams({ start, end })
+    setIsLoading(false)
+    setArtistPath(res)
+  }
+
   const onSubmitRandom = async () => {
     setStartName('...')
     setEndName('...')
@@ -148,7 +158,7 @@ const Interface = () => {
       {/* render recommendations if both names are blank or entered an invalid artist(s) */}
       {(!artistPath.valid ||
         (!queryParams.get('start') && !queryParams.get('end'))) && (
-        <Recommendations />
+        <Recommendations onSubmitPathWithNames={onSubmitPathWithNames} />
       )}
     </>
   )

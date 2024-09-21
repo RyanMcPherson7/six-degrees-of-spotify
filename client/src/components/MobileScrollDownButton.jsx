@@ -46,7 +46,7 @@ const MobileScrollDownButton = () => {
         onClick={() =>
           smoothScrollTo(
             document.documentElement.scrollHeight - 700,
-            scrollDurationMs 
+            scrollDurationMs
           )
         }
       />
