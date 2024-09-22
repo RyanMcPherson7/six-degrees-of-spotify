@@ -1,21 +1,19 @@
-const fs = require('fs')
+/**
+ * @param {*} nameToIdMap name -> set([ids])
+ * @returns sorted list of all available artist names including artists with duplicate stylized names
+ */
+const getArtistNameList = (nameToIdMap) => {
+  const namesList = []
 
-const getArtistNameList = (connectionsFile) => {
-  const artistNameSet = new Set()
-  const artistData = fs.readFileSync(connectionsFile, { encoding: 'utf8' })
-  const artistContentStringList = artistData.split('\n')
-
-  // remove empty line at end of connection file
-  artistContentStringList.pop()
-
-  // populating artist set for uniqueness
-  artistContentStringList.forEach((connection) => {
-    const [artistName] = connection.split('|')
-    artistNameSet.add(artistName)
+  nameToIdMap.forEach((idSet, name) => {
+    namesList.push(name)
+    for (let i = 1; i < idSet.size; i++) {
+      namesList.push(`${name} (${i + 1})`)
+    }
   })
 
   return {
-    artistNamesList: Array.from(artistNameSet).sort(),
+    artistNamesList: namesList.sort(),
   }
 }
 

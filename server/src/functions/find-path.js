@@ -2,23 +2,44 @@ const { BFS } = require('./bfs')
 const { Stack } = require('../classes/stack')
 
 /**
- *
- * @param {string} start starting artist Spotify name
- * @param {string} end starting artist Spotify name
- * @param {Graph} graph adjacency list graph of artist connections
- * @param {Map} artistDataMap maps artist Spotify name to their meta data (i.e. name, Spotify id, and image)
- * @returns if valid input artists, returns list of artist path connecting start from finish including each artist's metadata. in invalid input artist(s), returns list of invalid artists
+ * @param {string} startName starting artist Spotify name
+ * @param {string} endName starting artist Spotify name
+ * @param {Graph} graph adjacency list graph of artist id connections
+ * @param {Map} metaDataMap artistId -> { name, id, image }
+ * @param {Map} nameToIdMap name -> set([ids])
+ * @returns list of artist path connecting start from finish including each artist's metadata if valid artists. Returns list of invalid artists if input artist(s) are invalid
  */
-const findPath = (start, end, graph, artistDataMap) => {
+const findPath = (startName, endName, graph, metaDataMap, nameToIdMap) => {
   // checking input validity
   const invalidArtists = []
+  const regex = /\(\d\)$/ // parenthesis surrounding a single digit e.g. (5)
 
-  if (!graph.adjList.has(start)) {
-    invalidArtists.push(start)
+  const sanitizedStartName = regex.test(startName)
+    ? startName.slice(0, -4).toLowerCase()
+    : startName.toLowerCase()
+  const startIdIndex = regex.test(startName)
+    ? Number(startName.charAt(startName.length - 2)) - 1
+    : 0
+
+  const sanitizedEndName = regex.test(endName)
+    ? endName.slice(0, -4).toLowerCase()
+    : endName.toLowerCase()
+  const endIdIndex = regex.test(endName)
+    ? Number(endName.charAt(endName.length - 2)) - 1
+    : 0
+
+  if (
+    !nameToIdMap.has(sanitizedStartName) ||
+    nameToIdMap.get(sanitizedStartName).size < startIdIndex + 1
+  ) {
+    invalidArtists.push(startName)
   }
 
-  if (!graph.adjList.has(end)) {
-    invalidArtists.push(end)
+  if (
+    !nameToIdMap.has(sanitizedEndName) ||
+    nameToIdMap.get(sanitizedEndName).size < endIdIndex + 1
+  ) {
+    invalidArtists.push(endName)
   }
 
   // return invalid artist(s)
@@ -29,12 +50,16 @@ const findPath = (start, end, graph, artistDataMap) => {
     }
   }
 
+  // converting names to Spotify ids
+  const startId = [...nameToIdMap.get(sanitizedStartName)][startIdIndex]
+  const endId = [...nameToIdMap.get(sanitizedEndName)][endIdIndex]
+
   // finding path
-  const paths = BFS(graph, start, end)
+  const paths = BFS(graph, startId, endId)
 
   const stk = new Stack()
-  stk.push(end)
-  let parent = paths.get(end)
+  stk.push(endId)
+  let parent = paths.get(endId)
 
   // backtracking
   while (parent !== '-1') {
@@ -45,7 +70,7 @@ const findPath = (start, end, graph, artistDataMap) => {
   // building path
   const artistPath = []
   while (!stk.empty()) {
-    artistPath.push(artistDataMap.get(stk.top()))
+    artistPath.push(metaDataMap.get(stk.top()))
     stk.pop()
   }
 

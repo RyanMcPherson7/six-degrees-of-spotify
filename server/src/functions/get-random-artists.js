@@ -2,22 +2,19 @@ const { findPath } = require('./find-path')
 
 /**
  * @param {Graph} graph adjacency list graph of artist connections
- * @param {Map} artistDataMap maps artist Spotify name to their meta data (i.e. name, Spotify id, and image)
+ * @param {Map} metaDataMap artistId -> { name, id, image }
+ * @param {Map} nameToIdMap name -> set([ids])
+ * @param {Array[string]} artistNamesList list of each artist name to pick from
  * @returns a randomly selected start and end artist and the connection path between them
  */
-const getRandomArtists = (graph, artistDataMap, artistNamesList) => {
+const getRandomArtists = (graph, metaDataMap, nameToIdMap, artistNamesList) => {
   // getting 2 random artists from artist list
   const start =
     artistNamesList[Math.floor(Math.random() * artistNamesList.length)]
   const end =
     artistNamesList[Math.floor(Math.random() * artistNamesList.length)]
 
-  const path = findPath(
-    start.toLowerCase(),
-    end.toLowerCase(),
-    graph,
-    artistDataMap
-  )
+  const path = findPath(start, end, graph, metaDataMap, nameToIdMap)
 
   return {
     start,
