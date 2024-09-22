@@ -12,7 +12,7 @@ const { Stack } = require('../classes/stack')
 const findPath = (startName, endName, graph, metaDataMap, nameToIdMap) => {
   // checking input validity
   const invalidArtists = []
-  const regex = /\(\d\)$/ // parenthesis surrounding a single digit e.g. (5)
+  const regex = /\([1-9]\)$/ // parenthesis surrounding a single digit ignoring zero e.g. (5)
 
   const sanitizedStartName = regex.test(startName)
     ? startName.slice(0, -4).toLowerCase()
