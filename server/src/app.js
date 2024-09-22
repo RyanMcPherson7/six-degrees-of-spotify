@@ -18,7 +18,7 @@ const graph = new Graph()
 const metaDataMap = new Map()
 const nameToIdMap = new Map()
 populateGraph(graph, metaDataMap, nameToIdMap, connectionsFile)
-const artistNamesList = getArtistNameList(nameToIdMap)
+const artistNamesList = getArtistNameList(metaDataMap, nameToIdMap)
 
 // takes input from request body and returns path with artist names, ids, and images
 app.post('/api/path', (req, res) => {
