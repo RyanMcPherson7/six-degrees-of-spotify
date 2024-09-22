@@ -18,7 +18,7 @@ const ArtistPanel = ({ path }) => (
           />
         </div>
 
-        {artist.artist !== path[path.length - 1].artist && (
+        {i !== path.length - 1 && (
           <>
             <FaArrowsAltV className="mobile-vertical-double-arrow" />
             <FaArrowsAltH
