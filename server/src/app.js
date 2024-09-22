@@ -22,15 +22,15 @@ const artistNamesList = getArtistNameList(metaDataMap, nameToIdMap)
 
 // takes input from request body and returns path with artist names, ids, and images
 app.post('/api/path', (req, res) => {
-  const start = (req.body.start || '').toLowerCase().trim()
-  const end = (req.body.end || '').toLowerCase().trim()
+  const start = (req.body.start || '').trim()
+  const end = (req.body.end || '').trim()
   res.json(findPath(start, end, graph, metaDataMap, nameToIdMap))
 })
 
 // takes input from query string and returns path with artist names, ids, and images
 app.get('/api/path', (req, res) => {
-  const start = (req.query.start || '').toLowerCase().trim()
-  const end = (req.query.end || '').toLowerCase().trim()
+  const start = (req.query.start || '').trim()
+  const end = (req.query.end || '').trim()
   res.json(findPath(start, end, graph, metaDataMap, nameToIdMap))
 })
 
