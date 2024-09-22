@@ -4,7 +4,7 @@ const LoadingArtistPanel = () => {
   const loadingList = [1, 2, 3, 4, 5, 6, 7, 8]
 
   return (
-    <div className="artist-panel">
+    <div className="artist-panel-loading">
       {loadingList.map((num) => (
         <>
           <div className="loading-artist-profile" key={num}>

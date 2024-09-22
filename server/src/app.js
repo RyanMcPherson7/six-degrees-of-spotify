@@ -15,28 +15,34 @@ app.use(express.json())
 
 // create large and expensive data structures once then pass down to respective functions
 const graph = new Graph()
-const artistDataMap = new Map()
-populateGraph(graph, artistDataMap, connectionsFile)
-const artistNamesList = getArtistNameList(connectionsFile)
+const metaDataMap = new Map()
+const nameToIdMap = new Map()
+populateGraph(graph, metaDataMap, nameToIdMap, connectionsFile)
+const artistNamesList = getArtistNameList(metaDataMap, nameToIdMap)
 
 // takes input from request body and returns path with artist names, ids, and images
 app.post('/api/path', (req, res) => {
-  const start = (req.body.start || '').toLowerCase().trim()
-  const end = (req.body.end || '').toLowerCase().trim()
-  res.json(findPath(start, end, graph, artistDataMap))
+  const start = (req.body.start || '').trim()
+  const end = (req.body.end || '').trim()
+  res.json(findPath(start, end, graph, metaDataMap, nameToIdMap))
 })
 
 // takes input from query string and returns path with artist names, ids, and images
 app.get('/api/path', (req, res) => {
-  const start = (req.query.start || '').toLowerCase().trim()
-  const end = (req.query.end || '').toLowerCase().trim()
-  res.json(findPath(start, end, graph, artistDataMap))
+  const start = (req.query.start || '').trim()
+  const end = (req.query.end || '').trim()
+  res.json(findPath(start, end, graph, metaDataMap, nameToIdMap))
 })
 
 // returns an object with a random start and random end artist
 app.get('/api/random', (req, res) => {
   res.json(
-    getRandomArtists(graph, artistDataMap, artistNamesList.artistNamesList)
+    getRandomArtists(
+      graph,
+      metaDataMap,
+      nameToIdMap,
+      artistNamesList.artistNamesList
+    )
   )
 })
 

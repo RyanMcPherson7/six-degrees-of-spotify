@@ -281,6 +281,17 @@ button::before {
 /* ================================ */
 /*       Artist Panel Loading       */
 /* ================================ */
+.artist-panel-loading {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  text-align: center;
+  margin: 1rem auto;
+  max-width: 600px;
+  justify-content: center;
+  align-items: center;
+}
+
 #loading-degree-of-separation-message {
   margin: 1.93rem 0 auto 0;
   font-size: 2.1rem;
@@ -435,8 +446,6 @@ button::before {
 
   .artist-panel {
     display: grid;
-    grid-template-columns: 1fr 0.1fr 1fr 0.1fr;
-    align-items: start;
   }
 
   .artist-profile {
@@ -504,6 +513,11 @@ button::before {
     display: none;
   }
 
+  .artist-panel-loading {
+    display: grid;
+    grid-template-columns: 1fr 0.1fr 1fr 0.1fr;
+  }
+
   .loading-artist-name {
     width: 150px;
     font-size: 1rem;
@@ -531,7 +545,7 @@ button::before {
 }
 
 @media (min-width: 900px) {
-  .artist-panel {
+  .artist-panel-loading {
     grid-template-columns: 1fr 0.1fr 1fr 0.1fr 1fr 0.1fr;
     max-width: 800px;
   }
@@ -542,7 +556,7 @@ button::before {
 }
 
 @media (min-width: 1300px) {
-  .artist-panel {
+  .artist-panel-loading {
     grid-template-columns: 1fr 0.1fr 1fr 0.1fr 1fr 0.1fr 1fr 0.1fr;
     max-width: 1200px;
   }
@@ -553,7 +567,7 @@ button::before {
 
   .artist-profile,
   .loading-artist-profile {
-    margin: 0.5rem 0;
+    margin-bottom: 0.5rem;
   }
 
   #recommendations-list {
