@@ -8,6 +8,9 @@ const fs = require('fs')
  * @param {string} connectionsFile path to flat file db
  */
 const populateGraph = (graph, metaDataMap, nameToIdMap, connectionsFile) => {
+  const startTime = Date.now()
+  let numConnections = 0
+
   const artistData = fs.readFileSync(connectionsFile, { encoding: 'utf8' })
   const artistContentStringList = artistData.split('\n')
 
@@ -15,6 +18,7 @@ const populateGraph = (graph, metaDataMap, nameToIdMap, connectionsFile) => {
   artistContentStringList.pop()
 
   artistContentStringList.forEach((connection) => {
+    numConnections++
     const [from, to] = connection.split(' -> ')
     const [fromName, fromId, fromImageUrl] = from.split('|')
     const [toName, toId, toImageUrl] = to.split('|')
@@ -56,6 +60,17 @@ const populateGraph = (graph, metaDataMap, nameToIdMap, connectionsFile) => {
       nameToIdMap.get(toName.toLowerCase()).add(toId)
     }
   })
+
+  // performance logging
+  const timeElapsedS = ((Date.now() - startTime) / 1000).toFixed(3)
+  let numArtists = 0
+  nameToIdMap.forEach((val) => {
+    numArtists += val.size
+  })
+
+  console.log('Built graph in', timeElapsedS, 'seconds')
+  console.log('Found', numArtists, 'unique artists')
+  console.log('Found', numConnections, 'unique one-way connections')
 }
 
 module.exports = { populateGraph }
