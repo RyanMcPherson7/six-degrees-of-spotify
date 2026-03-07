@@ -12,6 +12,8 @@ A web app to find the shortest path between 2 popular Spotify artists using data
 4. The data inside the flat-file was generated on 9/22/24 with a [popularity](https://help.chartmetric.com/en/articles/1560578-what-is-spotify-popularity-index) minimum of 50 using code from [`/server/data-scrapping`](/server/data-scrapping) and the [`GET /v1/artists/{id}/related-artists`](https://developer.spotify.com/console/get-artist-related-artists/) endpoint from the [Spotify Web API](https://developer.spotify.com/documentation/web-api/)
 5. After building the graph, [breadth first search](https://www.hackerearth.com/practice/algorithms/graphs/breadth-first-search/tutorial/) is run to find the shortest path (smallest degree) between the 2 input artists
 6. Finally, the server sends the computed path to the client to be displayed
+> [!IMPORTANT]
+> As of November 2024, Spotify discontinuted access to their `/related-artists` endpoint, meaning this project can no longer fetch the latest up to date artist relations going forward. As it stands, this project is working with data fetched on 9/22/24. See Spotify's official post [here](https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api)
 
 ## :rocket: Running Locally
 ### Prereqs
